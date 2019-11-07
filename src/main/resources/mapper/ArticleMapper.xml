@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mirrorming.blog.mapper.auto.ArticleMapper">
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Article">
+    <!--@mbg.generated-->
+    <!--@Table article-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="click" jdbcType="INTEGER" property="click" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="is_private" jdbcType="BIT" property="isPrivate" />
+    <result column="read_password" jdbcType="VARCHAR" property="readPassword" />
+    <result column="comment_id" jdbcType="INTEGER" property="commentId" />
+    <result column="summary" jdbcType="LONGVARCHAR" property="summary" />
+    <result column="is_draft" jdbcType="BIT" property="isDraft" />
+    <result column="liked" jdbcType="INTEGER" property="liked" />
+    <result column="tag" jdbcType="OTHER" property="tag" />
+    <result column="score" jdbcType="OTHER" property="score" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="is_up" jdbcType="BIT" property="isUp" />
+    <result column="is_support" jdbcType="BIT" property="isSupport" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, title, ip, click, category_id, is_private, read_password, comment_id, 
+    summary, is_draft, liked, tag, score, img, created, updated, is_up, is_support
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update article
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.userId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.title,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.ip,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="click = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.click,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="category_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.categoryId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="is_private = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.isPrivate,jdbcType=BIT}
+        </foreach>
+      </trim>
+      <trim prefix="read_password = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.readPassword,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="comment_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.commentId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="summary = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.summary,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="is_draft = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.isDraft,jdbcType=BIT}
+        </foreach>
+      </trim>
+      <trim prefix="liked = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.liked,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.tag,jdbcType=OTHER}
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.score,jdbcType=OTHER}
+        </foreach>
+      </trim>
+      <trim prefix="img = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.img,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="created = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.created,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="updated = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.updated,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="is_up = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.isUp,jdbcType=BIT}
+        </foreach>
+      </trim>
+      <trim prefix="is_support = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.isSupport,jdbcType=BIT}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into article
+    (user_id, title, ip, click, category_id, is_private, read_password, comment_id, summary, 
+      is_draft, liked, tag, score, img, created, updated, is_up, is_support)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.userId,jdbcType=INTEGER}, #{item.title,jdbcType=VARCHAR}, #{item.ip,jdbcType=VARCHAR}, 
+        #{item.click,jdbcType=INTEGER}, #{item.categoryId,jdbcType=INTEGER}, #{item.isPrivate,jdbcType=BIT}, 
+        #{item.readPassword,jdbcType=VARCHAR}, #{item.commentId,jdbcType=INTEGER}, #{item.summary,jdbcType=LONGVARCHAR}, 
+        #{item.isDraft,jdbcType=BIT}, #{item.liked,jdbcType=INTEGER}, #{item.tag,jdbcType=OTHER}, 
+        #{item.score,jdbcType=OTHER}, #{item.img,jdbcType=VARCHAR}, #{item.created,jdbcType=TIMESTAMP}, 
+        #{item.updated,jdbcType=TIMESTAMP}, #{item.isUp,jdbcType=BIT}, #{item.isSupport,jdbcType=BIT}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Article" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      user_id,
+      title,
+      ip,
+      click,
+      category_id,
+      is_private,
+      read_password,
+      comment_id,
+      summary,
+      is_draft,
+      liked,
+      tag,
+      score,
+      img,
+      created,
+      updated,
+      is_up,
+      is_support,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{userId,jdbcType=INTEGER},
+      #{title,jdbcType=VARCHAR},
+      #{ip,jdbcType=VARCHAR},
+      #{click,jdbcType=INTEGER},
+      #{categoryId,jdbcType=INTEGER},
+      #{isPrivate,jdbcType=BIT},
+      #{readPassword,jdbcType=VARCHAR},
+      #{commentId,jdbcType=INTEGER},
+      #{summary,jdbcType=LONGVARCHAR},
+      #{isDraft,jdbcType=BIT},
+      #{liked,jdbcType=INTEGER},
+      #{tag,jdbcType=OTHER},
+      #{score,jdbcType=OTHER},
+      #{img,jdbcType=VARCHAR},
+      #{created,jdbcType=TIMESTAMP},
+      #{updated,jdbcType=TIMESTAMP},
+      #{isUp,jdbcType=BIT},
+      #{isSupport,jdbcType=BIT},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      user_id = #{userId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      click = #{click,jdbcType=INTEGER},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      is_private = #{isPrivate,jdbcType=BIT},
+      read_password = #{readPassword,jdbcType=VARCHAR},
+      comment_id = #{commentId,jdbcType=INTEGER},
+      summary = #{summary,jdbcType=LONGVARCHAR},
+      is_draft = #{isDraft,jdbcType=BIT},
+      liked = #{liked,jdbcType=INTEGER},
+      tag = #{tag,jdbcType=OTHER},
+      score = #{score,jdbcType=OTHER},
+      img = #{img,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      is_up = #{isUp,jdbcType=BIT},
+      is_support = #{isSupport,jdbcType=BIT},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Article" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="click != null">
+        click,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="isPrivate != null">
+        is_private,
+      </if>
+      <if test="readPassword != null">
+        read_password,
+      </if>
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+      <if test="isDraft != null">
+        is_draft,
+      </if>
+      <if test="liked != null">
+        liked,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="isUp != null">
+        is_up,
+      </if>
+      <if test="isSupport != null">
+        is_support,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="click != null">
+        #{click,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="isPrivate != null">
+        #{isPrivate,jdbcType=BIT},
+      </if>
+      <if test="readPassword != null">
+        #{readPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="commentId != null">
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="isDraft != null">
+        #{isDraft,jdbcType=BIT},
+      </if>
+      <if test="liked != null">
+        #{liked,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=OTHER},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=OTHER},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isUp != null">
+        #{isUp,jdbcType=BIT},
+      </if>
+      <if test="isSupport != null">
+        #{isSupport,jdbcType=BIT},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="click != null">
+        click = #{click,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="isPrivate != null">
+        is_private = #{isPrivate,jdbcType=BIT},
+      </if>
+      <if test="readPassword != null">
+        read_password = #{readPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="commentId != null">
+        comment_id = #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null">
+        summary = #{summary,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="isDraft != null">
+        is_draft = #{isDraft,jdbcType=BIT},
+      </if>
+      <if test="liked != null">
+        liked = #{liked,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=OTHER},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=OTHER},
+      </if>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isUp != null">
+        is_up = #{isUp,jdbcType=BIT},
+      </if>
+      <if test="isSupport != null">
+        is_support = #{isSupport,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+</mapper>
