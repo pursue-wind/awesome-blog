@@ -4,7 +4,7 @@ services:
     hostname: blog
     image: mireal/blog
     build:
-      dockerfile: Dockerfile1
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
     networks:
