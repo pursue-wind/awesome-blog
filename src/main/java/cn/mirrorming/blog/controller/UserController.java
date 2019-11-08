@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
+    //todo 只能通过邮箱注册
     private final UserService userService;
 
 
@@ -31,3 +32,4 @@ public class UserController {
         return null;
     }
 }
+

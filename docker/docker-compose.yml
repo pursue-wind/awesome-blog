@@ -1,0 +1,15 @@
+version: '3.1'
+services:
+  blog:
+    restart: always
+    image: blog
+    container_name: blog
+    ports:
+      - 8080:8080
+    networks:
+      - blog
+
+networks:
+  blog:
+    external:
+      name: blog
