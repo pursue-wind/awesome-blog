@@ -1,16 +1,18 @@
-version: '3.1'
+version: '3'
 services:
   blog:
-    hostname: blog
-    image: mireal/blog
     build:
+      context: .
       dockerfile: Dockerfile
-    ports:
-      - 8080:8080
+    image: blog:1.0.0
+    container_name: blog
+    restart: always
     networks:
-      - blog
-
+      - nets
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS=-Xmx256M -Duser.timezone=GMT+08
 networks:
-  blog:
-    external:
-      name: blog
+  nets:
+    external: false
