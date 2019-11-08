@@ -18,20 +18,24 @@ public class OkHttpClientUtil {
     private static final int READ_TIMEOUT = 100;
     private static final int CONNECT_TIMEOUT = 60;
     private static final int WRITE_TIMEOUT = 60;
-    private static final MediaType JSON = MediaType.parse(org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE);
-    private static final byte[] LOCKER = new byte[0];
-    private static OkHttpClientUtil mInstance;
+    private static final MediaType JSON = MediaType.parse("application/json;charset=UTF-8");
     private OkHttpClient okHttpClient;
 
+
     private OkHttpClientUtil() {
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-        // 读取超时
-        clientBuilder.readTimeout(READ_TIMEOUT, TimeUnit.SECONDS);
-        // 连接超时
-        clientBuilder.connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS);
-        //写入超时
-        clientBuilder.writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS);
-        okHttpClient = clientBuilder.build();
+        okHttpClient =
+                new OkHttpClient.Builder()
+                        // 读取超时
+                        .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                        // 连接超时
+                        .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                        //写入超时
+                        .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+                        .build();
+    }
+
+    private static class SingletonHolder {
+        private static final OkHttpClientUtil INSTANCE = new OkHttpClientUtil();
     }
 
     /**
@@ -39,16 +43,10 @@ public class OkHttpClientUtil {
      *
      * @return {@link OkHttpClientUtil}
      */
-    public static OkHttpClientUtil getInstance() {
-        if (mInstance == null) {
-            synchronized (LOCKER) {
-                if (mInstance == null) {
-                    mInstance = new OkHttpClientUtil();
-                }
-            }
-        }
-        return mInstance;
+    public static final OkHttpClientUtil getInstance() {
+        return SingletonHolder.INSTANCE;
     }
+
 
     /**
      * GET，同步方式，获取网络数据
@@ -58,8 +56,7 @@ public class OkHttpClientUtil {
      */
     public Response getData(String url) {
         // 构造 Request
-        Request.Builder builder = new Request.Builder();
-        Request request = builder.get().url(url).build();
+        Request request = new Request.Builder().get().url(url).build();
         // 将 Request 封装为 Call
         Call call = okHttpClient.newCall(request);
         // 执行 Call，得到 Response

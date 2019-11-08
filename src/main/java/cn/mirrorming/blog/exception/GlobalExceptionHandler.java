@@ -52,8 +52,8 @@ public class GlobalExceptionHandler {
         return ResultData.fail(e.getMessage());
     }
 
-    @ExceptionHandler(RegisterException.class)
-    public ResultData RegisterExceptionHandler(RegisterException e) {
+    @ExceptionHandler(UserException.class)
+    public ResultData RegisterExceptionHandler(UserException e) {
         return ResultData.fail(e.getMessage());
     }
 }

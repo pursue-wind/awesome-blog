@@ -3,7 +3,7 @@ package cn.mirrorming.blog.exception;
 /**
  * @author mirror
  */
-public class RegisterException extends RuntimeException {
+public class UserException extends RuntimeException {
     /**
      * 错误码
      */
@@ -17,15 +17,15 @@ public class RegisterException extends RuntimeException {
         this.statusCode = statusCode;
     }
 
-    public RegisterException() {
+    public UserException() {
     }
 
-    public RegisterException(Integer statusCode, String message) {
+    public UserException(Integer statusCode, String message) {
         super(message);
         this.statusCode = statusCode;
     }
 
-    public RegisterException(String message) {
+    public UserException(String message) {
         super(message);
     }
 

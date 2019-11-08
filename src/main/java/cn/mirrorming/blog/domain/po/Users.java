@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -21,7 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "users")
-public class Users implements Serializable, UserDetails {
+public class Users implements Serializable {
     /**
      * 用户ID
      */
@@ -167,41 +168,4 @@ public class Users implements Serializable, UserDetails {
     public static final String COL_IS_FREEZE = "is_freeze";
 
     public static final String COL_IS_ADMIN = "is_admin";
-
-    public Users(String name, String password, boolean b, boolean b1, boolean b2, boolean b3, List<GrantedAuthority> grantedAuthorities) {
-    }
-
-    public static UsersBuilder builder() {
-        return new UsersBuilder();
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return name;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

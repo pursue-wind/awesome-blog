@@ -1,6 +1,6 @@
 package cn.mirrorming.blog.security.config;
 
-import cn.mirrorming.blog.security.service.UserDetailsServiceImpl;
+import cn.mirrorming.blog.security.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,11 +1,12 @@
 package cn.mirrorming.blog.service;
 
+import cn.mirrorming.blog.domain.constants.SystemConstant;
+import cn.mirrorming.blog.domain.dto.LoginRegisterDto;
 import cn.mirrorming.blog.domain.po.Users;
-import cn.mirrorming.blog.exception.RegisterException;
+import cn.mirrorming.blog.exception.UserException;
 import cn.mirrorming.blog.mapper.auto.UsersMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,22 @@ public class UserService {
     private final UsersMapper usersMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public void register(Users user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        usersMapper.insert(user);
+    /**
+     * 用户注册
+     *
+     * @param loginRegisterDto
+     * @return
+     */
+    public boolean register(LoginRegisterDto loginRegisterDto) {
+        Users users = this.selectUserByUserName(loginRegisterDto.getEmail());
+        if (users != null) {
+            throw new UserException("邮箱已存在！");
+        }
+        return usersMapper.insert(
+                Users.builder()
+                        .email(loginRegisterDto.getEmail())
+                        .password(passwordEncoder.encode(loginRegisterDto.getPassword()))
+                        .build()) == SystemConstant.EFFECT_ROW;
     }
 
     /**
@@ -32,11 +46,21 @@ public class UserService {
      *
      * @param name
      * @return Users
-     * @throws RegisterException 用户名已存在则抛异常
+     * @throws UserException 用户名已存在则抛异常
      */
     public Users selectUserByUserName(String name) {
         Users users = usersMapper.selectOne(new QueryWrapper<Users>().eq(Users.COL_NAME, name));
         Optional.ofNullable(users).orElseGet(Users::new);
         return users;
+    }
+
+    /**
+     * 通过邮箱查询用户
+     *
+     * @param email
+     * @return
+     */
+    public Users selectUserByEmail(String email) {
+        return usersMapper.selectOne(new QueryWrapper<Users>().eq(Users.COL_EMAIL, email));
     }
 }
