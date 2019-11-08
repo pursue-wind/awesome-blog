@@ -11,11 +11,12 @@
 ## 后台
 
 - 核心框架：SpringBoot
+- 安全框架：SpringSecurity
 - ORM 框架：MybatisPlus
 - 数据库：MySQL8
 - 数据库连接池：Hikari
-- 数据库缓存：Redis
-- 全文检索引擎：ElasticSearch
+- 缓存：Redis
+- 检索引擎：ElasticSearch
 - 文件系统：七牛云
 - 日志：Logback
 - 部署：Jenkins + dockercompose  
