@@ -19,15 +19,15 @@
     <result column="tag" jdbcType="OTHER" property="tag" />
     <result column="score" jdbcType="OTHER" property="score" />
     <result column="img" jdbcType="VARCHAR" property="img" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="is_up" jdbcType="BIT" property="isUp" />
     <result column="is_support" jdbcType="BIT" property="isSupport" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, user_id, title, ip, click, category_id, is_private, read_password, comment_id, 
-    summary, is_draft, liked, tag, score, img, created, updated, is_up, is_support
+    summary, is_draft, liked, tag, score, img, create_time, update_time, is_up, is_support
   </sql>
   <update id="updateBatch" parameterType="java.util.List">
     <!--@mbg.generated-->
@@ -103,14 +103,14 @@
           when id = #{item.id,jdbcType=INTEGER} then #{item.img,jdbcType=VARCHAR}
         </foreach>
       </trim>
-      <trim prefix="created = case" suffix="end,">
+      <trim prefix="create_time = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.created,jdbcType=TIMESTAMP}
+          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
         </foreach>
       </trim>
-      <trim prefix="updated = case" suffix="end,">
+      <trim prefix="update_time = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.updated,jdbcType=TIMESTAMP}
+          when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
         </foreach>
       </trim>
       <trim prefix="is_up = case" suffix="end,">
@@ -133,15 +133,15 @@
     <!--@mbg.generated-->
     insert into article
     (user_id, title, ip, click, category_id, is_private, read_password, comment_id, summary, 
-      is_draft, liked, tag, score, img, created, updated, is_up, is_support)
+      is_draft, liked, tag, score, img, create_time, update_time, is_up, is_support)
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.userId,jdbcType=INTEGER}, #{item.title,jdbcType=VARCHAR}, #{item.ip,jdbcType=VARCHAR}, 
         #{item.click,jdbcType=INTEGER}, #{item.categoryId,jdbcType=INTEGER}, #{item.isPrivate,jdbcType=BIT}, 
         #{item.readPassword,jdbcType=VARCHAR}, #{item.commentId,jdbcType=INTEGER}, #{item.summary,jdbcType=LONGVARCHAR}, 
         #{item.isDraft,jdbcType=BIT}, #{item.liked,jdbcType=INTEGER}, #{item.tag,jdbcType=OTHER}, 
-        #{item.score,jdbcType=OTHER}, #{item.img,jdbcType=VARCHAR}, #{item.created,jdbcType=TIMESTAMP}, 
-        #{item.updated,jdbcType=TIMESTAMP}, #{item.isUp,jdbcType=BIT}, #{item.isSupport,jdbcType=BIT}
+        #{item.score,jdbcType=OTHER}, #{item.img,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, 
+        #{item.updateTime,jdbcType=TIMESTAMP}, #{item.isUp,jdbcType=BIT}, #{item.isSupport,jdbcType=BIT}
         )
     </foreach>
   </insert>
@@ -166,8 +166,8 @@
       tag,
       score,
       img,
-      created,
-      updated,
+      create_time,
+      update_time,
       is_up,
       is_support,
     </trim>
@@ -190,8 +190,8 @@
       #{tag,jdbcType=OTHER},
       #{score,jdbcType=OTHER},
       #{img,jdbcType=VARCHAR},
-      #{created,jdbcType=TIMESTAMP},
-      #{updated,jdbcType=TIMESTAMP},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
       #{isUp,jdbcType=BIT},
       #{isSupport,jdbcType=BIT},
     </trim>
@@ -214,8 +214,8 @@
       tag = #{tag,jdbcType=OTHER},
       score = #{score,jdbcType=OTHER},
       img = #{img,jdbcType=VARCHAR},
-      created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
       is_up = #{isUp,jdbcType=BIT},
       is_support = #{isSupport,jdbcType=BIT},
     </trim>
@@ -269,11 +269,11 @@
       <if test="img != null">
         img,
       </if>
-      <if test="created != null">
-        created,
+      <if test="createTime != null">
+        create_time,
       </if>
-      <if test="updated != null">
-        updated,
+      <if test="updateTime != null">
+        update_time,
       </if>
       <if test="isUp != null">
         is_up,
@@ -329,11 +329,11 @@
       <if test="img != null">
         #{img,jdbcType=VARCHAR},
       </if>
-      <if test="created != null">
-        #{created,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updated != null">
-        #{updated,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isUp != null">
         #{isUp,jdbcType=BIT},
@@ -389,11 +389,11 @@
       <if test="img != null">
         img = #{img,jdbcType=VARCHAR},
       </if>
-      <if test="created != null">
-        created = #{created,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updated != null">
-        updated = #{updated,jdbcType=TIMESTAMP},
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isUp != null">
         is_up = #{isUp,jdbcType=BIT},

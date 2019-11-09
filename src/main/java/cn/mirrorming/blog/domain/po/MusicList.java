@@ -16,25 +16,43 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "tag")
-public class Tag implements Serializable {
+@TableName(value = "music_list")
+public class MusicList implements Serializable {
     /**
-     * 标签ID
+     * 歌单表主键
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.INPUT)
     private Integer id;
 
     /**
-     * 标签名
+     * 歌单名称
      */
     @TableField(value = "name")
     private String name;
 
     /**
-     * 用户ID
+     * 歌单图片
+     */
+    @TableField(value = "pic")
+    private String pic;
+
+    /**
+     * 歌单用户id
      */
     @TableField(value = "user_id")
     private Integer userId;
+
+    /**
+     * 歌单标签
+     */
+    @TableField(value = "tag")
+    private String tag;
+
+    /**
+     * 歌单介绍
+     */
+    @TableField(value = "introduction")
+    private String introduction;
 
     /**
      * 创建时间
@@ -54,13 +72,15 @@ public class Tag implements Serializable {
 
     public static final String COL_NAME = "name";
 
+    public static final String COL_PIC = "pic";
+
     public static final String COL_USER_ID = "user_id";
+
+    public static final String COL_TAG = "tag";
+
+    public static final String COL_INTRODUCTION = "introduction";
 
     public static final String COL_CREATE_TIME = "create_time";
 
     public static final String COL_UPDATE_TIME = "update_time";
-
-    public static TagBuilder builder() {
-        return new TagBuilder();
-    }
 }

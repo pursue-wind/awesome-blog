@@ -17,25 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName(value = "article")
 public class Article implements Serializable {
-    public static final String COL_ID = "id";
-    public static final String COL_USER_ID = "user_id";
-    public static final String COL_TITLE = "title";
-    public static final String COL_IP = "ip";
-    public static final String COL_CLICK = "click";
-    public static final String COL_CATEGORY_ID = "category_id";
-    public static final String COL_IS_PRIVATE = "is_private";
-    public static final String COL_READ_PASSWORD = "read_password";
-    public static final String COL_COMMENT_ID = "comment_id";
-    public static final String COL_SUMMARY = "summary";
-    public static final String COL_IS_DRAFT = "is_draft";
-    public static final String COL_LIKED = "liked";
-    public static final String COL_TAG = "tag";
-    public static final String COL_SCORE = "score";
-    public static final String COL_IMG = "img";
     public static final String COL_CREATED = "created";
     public static final String COL_UPDATED = "updated";
-    public static final String COL_IS_UP = "is_up";
-    public static final String COL_IS_SUPPORT = "is_support";
     /**
      * 文章ID
      */
@@ -129,14 +112,14 @@ public class Article implements Serializable {
     /**
      * 发布时间
      */
-    @TableField(value = "created")
-    private Date created;
+    @TableField(value = "create_time")
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    @TableField(value = "updated")
-    private Date updated;
+    @TableField(value = "update_time")
+    private Date updateTime;
 
     /**
      * 是否置顶:0为否，1为是
@@ -151,6 +134,44 @@ public class Article implements Serializable {
     private Boolean isSupport;
 
     private static final long serialVersionUID = 1L;
+
+    public static final String COL_ID = "id";
+
+    public static final String COL_USER_ID = "user_id";
+
+    public static final String COL_TITLE = "title";
+
+    public static final String COL_IP = "ip";
+
+    public static final String COL_CLICK = "click";
+
+    public static final String COL_CATEGORY_ID = "category_id";
+
+    public static final String COL_IS_PRIVATE = "is_private";
+
+    public static final String COL_READ_PASSWORD = "read_password";
+
+    public static final String COL_COMMENT_ID = "comment_id";
+
+    public static final String COL_SUMMARY = "summary";
+
+    public static final String COL_IS_DRAFT = "is_draft";
+
+    public static final String COL_LIKED = "liked";
+
+    public static final String COL_TAG = "tag";
+
+    public static final String COL_SCORE = "score";
+
+    public static final String COL_IMG = "img";
+
+    public static final String COL_CREATE_TIME = "create_time";
+
+    public static final String COL_UPDATE_TIME = "update_time";
+
+    public static final String COL_IS_UP = "is_up";
+
+    public static final String COL_IS_SUPPORT = "is_support";
 
     public static ArticleBuilder builder() {
         return new ArticleBuilder();

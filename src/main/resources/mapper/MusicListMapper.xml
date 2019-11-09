@@ -1,31 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.mirrorming.blog.mapper.auto.TagMapper">
-  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Tag">
+<mapper namespace="cn.mirrorming.blog.mapper.auto.MusicListMapper">
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.MusicList">
     <!--@mbg.generated-->
-    <!--@Table tag-->
+    <!--@Table music_list-->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, `name`, user_id, create_time, update_time
+    id, `name`, pic, user_id, tag, introduction, create_time, update_time
   </sql>
   <update id="updateBatch" parameterType="java.util.List">
     <!--@mbg.generated-->
-    update tag
+    update music_list
     <trim prefix="set" suffixOverrides=",">
       <trim prefix="`name` = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
         </foreach>
       </trim>
+      <trim prefix="pic = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.pic,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
       <trim prefix="user_id = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           when id = #{item.id,jdbcType=INTEGER} then #{item.userId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.tag,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="introduction = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.introduction,jdbcType=VARCHAR}
         </foreach>
       </trim>
       <trim prefix="create_time = case" suffix="end,">
@@ -44,52 +62,38 @@
       #{item.id,jdbcType=INTEGER}
     </foreach>
   </update>
-  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+  <insert id="batchInsert" parameterType="map">
     <!--@mbg.generated-->
-    insert into tag
-    (`name`, user_id, create_time, update_time)
+    insert into music_list
+    (id, `name`, pic, user_id, tag, introduction, create_time, update_time)
     values
     <foreach collection="list" item="item" separator=",">
-      (#{item.name,jdbcType=VARCHAR}, #{item.userId,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP}, 
-        #{item.updateTime,jdbcType=TIMESTAMP})
+      (#{item.id,jdbcType=INTEGER}, #{item.name,jdbcType=VARCHAR}, #{item.pic,jdbcType=VARCHAR}, 
+        #{item.userId,jdbcType=INTEGER}, #{item.tag,jdbcType=VARCHAR}, #{item.introduction,jdbcType=VARCHAR}, 
+        #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
-  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Tag" useGeneratedKeys="true">
+  <insert id="insertOrUpdate" parameterType="cn.mirrorming.blog.domain.po.MusicList">
     <!--@mbg.generated-->
-    insert into tag
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      `name`,
-      user_id,
-      create_time,
-      update_time,
-    </trim>
+    insert into music_list
+    (id, `name`, pic, user_id, tag, introduction, create_time, update_time)
     values
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      #{name,jdbcType=VARCHAR},
-      #{userId,jdbcType=INTEGER},
-      #{createTime,jdbcType=TIMESTAMP},
-      #{updateTime,jdbcType=TIMESTAMP},
-    </trim>
+    (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{tag,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
     on duplicate key update 
-    <trim suffixOverrides=",">
-      <if test="id != null">
-        id = #{id,jdbcType=INTEGER},
-      </if>
-      `name` = #{name,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-    </trim>
+    id = #{id,jdbcType=INTEGER}, 
+    `name` = #{name,jdbcType=VARCHAR}, 
+    pic = #{pic,jdbcType=VARCHAR}, 
+    user_id = #{userId,jdbcType=INTEGER}, 
+    tag = #{tag,jdbcType=VARCHAR}, 
+    introduction = #{introduction,jdbcType=VARCHAR}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
   </insert>
-  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Tag" useGeneratedKeys="true">
+  <insert id="insertOrUpdateSelective" parameterType="cn.mirrorming.blog.domain.po.MusicList">
     <!--@mbg.generated-->
-    insert into tag
+    insert into music_list
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -97,8 +101,17 @@
       <if test="name != null">
         `name`,
       </if>
+      <if test="pic != null">
+        pic,
+      </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="introduction != null">
+        introduction,
       </if>
       <if test="createTime != null">
         create_time,
@@ -115,8 +128,17 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="pic != null">
+        #{pic,jdbcType=VARCHAR},
+      </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -133,8 +155,17 @@
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="pic != null">
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},

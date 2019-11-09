@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mirrorming.blog.mapper.auto.MusicMapper">
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Music">
+    <!--@mbg.generated-->
+    <!--@Table music-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="music_id" jdbcType="VARCHAR" property="musicId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="artist" jdbcType="VARCHAR" property="artist" />
+    <result column="album_name" jdbcType="VARCHAR" property="albumName" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="comment_id" jdbcType="VARCHAR" property="commentId" />
+    <result column="lrc" jdbcType="LONGVARCHAR" property="lrc" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="music_list_id" jdbcType="INTEGER" property="musicListId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, music_id, `name`, artist, album_name, cover, url, comment_id, lrc, user_id, music_list_id, 
+    create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update music
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="music_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.musicId,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="artist = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.artist,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="album_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.albumName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="cover = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.cover,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="url = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.url,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="comment_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.commentId,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="lrc = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.lrc,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.userId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="music_list_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.musicListId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into music
+    (music_id, `name`, artist, album_name, cover, url, comment_id, lrc, user_id, music_list_id, 
+      create_time, update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.musicId,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, #{item.artist,jdbcType=VARCHAR}, 
+        #{item.albumName,jdbcType=VARCHAR}, #{item.cover,jdbcType=VARCHAR}, #{item.url,jdbcType=VARCHAR}, 
+        #{item.commentId,jdbcType=VARCHAR}, #{item.lrc,jdbcType=LONGVARCHAR}, #{item.userId,jdbcType=INTEGER}, 
+        #{item.musicListId,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Music" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into music
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      music_id,
+      `name`,
+      artist,
+      album_name,
+      cover,
+      url,
+      comment_id,
+      lrc,
+      user_id,
+      music_list_id,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{musicId,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR},
+      #{artist,jdbcType=VARCHAR},
+      #{albumName,jdbcType=VARCHAR},
+      #{cover,jdbcType=VARCHAR},
+      #{url,jdbcType=VARCHAR},
+      #{commentId,jdbcType=VARCHAR},
+      #{lrc,jdbcType=LONGVARCHAR},
+      #{userId,jdbcType=INTEGER},
+      #{musicListId,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      music_id = #{musicId,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      artist = #{artist,jdbcType=VARCHAR},
+      album_name = #{albumName,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      comment_id = #{commentId,jdbcType=VARCHAR},
+      lrc = #{lrc,jdbcType=LONGVARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      music_list_id = #{musicListId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Music" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into music
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="musicId != null">
+        music_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="artist != null">
+        artist,
+      </if>
+      <if test="albumName != null">
+        album_name,
+      </if>
+      <if test="cover != null">
+        cover,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="lrc != null">
+        lrc,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="musicListId != null">
+        music_list_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="musicId != null">
+        #{musicId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="artist != null">
+        #{artist,jdbcType=VARCHAR},
+      </if>
+      <if test="albumName != null">
+        #{albumName,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="commentId != null">
+        #{commentId,jdbcType=VARCHAR},
+      </if>
+      <if test="lrc != null">
+        #{lrc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="musicListId != null">
+        #{musicListId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="musicId != null">
+        music_id = #{musicId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="artist != null">
+        artist = #{artist,jdbcType=VARCHAR},
+      </if>
+      <if test="albumName != null">
+        album_name = #{albumName,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null">
+        cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="commentId != null">
+        comment_id = #{commentId,jdbcType=VARCHAR},
+      </if>
+      <if test="lrc != null">
+        lrc = #{lrc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="musicListId != null">
+        music_list_id = #{musicListId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
