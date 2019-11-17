@@ -3,9 +3,9 @@ package cn.mirrorming.blog.service;
 import cn.mirrorming.blog.domain.po.SecurityPermission;
 import cn.mirrorming.blog.mapper.PermissionQueryMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2019/11/8 22:09
  */
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PermissionService {
     private final PermissionQueryMapper permissionQueryMapper;
 

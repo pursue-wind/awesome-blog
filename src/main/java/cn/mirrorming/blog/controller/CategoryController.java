@@ -1,9 +1,10 @@
 package cn.mirrorming.blog.controller;
 
+import cn.mirrorming.blog.domain.dto.base.ResultData;
 import cn.mirrorming.blog.domain.po.Category;
 import cn.mirrorming.blog.service.CategoryService;
-import cn.mirrorming.blog.domain.dto.base.ResultData;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +15,8 @@ import java.util.List;
  * @since v1.0.0
  */
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("category")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CategoryController {
     private final CategoryService categoryService;
 

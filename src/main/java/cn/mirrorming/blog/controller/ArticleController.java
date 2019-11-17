@@ -1,8 +1,9 @@
 package cn.mirrorming.blog.controller;
 
-import cn.mirrorming.blog.domain.po.Article;
+import cn.mirrorming.blog.domain.dto.article.ArticleListDto;
 import cn.mirrorming.blog.service.ArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +16,8 @@ import java.util.List;
  * @since v1.0.0
  */
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("article")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ArticleController {
     private final ArticleService articleService;
 
@@ -27,7 +28,9 @@ public class ArticleController {
 
     @GetMapping("all")
     public List selectAllArticle() {
-        List<Article> articles = articleService.selectAllArticle(1, 10);
-        return articles;
+        List<ArticleListDto> articleListDtos = articleService.selectAllArticle(1, 10);
+        return articleListDtos;
     }
 }
+
+

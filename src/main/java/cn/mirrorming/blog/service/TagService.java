@@ -1,15 +1,16 @@
 package cn.mirrorming.blog.service;
 
+import cn.mirrorming.blog.domain.constants.SystemConstant;
 import cn.mirrorming.blog.domain.po.Tag;
 import cn.mirrorming.blog.mapper.auto.TagMapper;
-import cn.mirrorming.blog.domain.constants.SystemConstant;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TagService {
     private final TagMapper tagMapper;
 

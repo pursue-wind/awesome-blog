@@ -8,6 +8,7 @@ import cn.mirrorming.blog.service.MusicService;
 import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version V1.0
  * @date 2019/11/9 13:46
  */
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
 @RestController
 @RequestMapping("music")
@@ -58,6 +59,7 @@ public class MusicController {
     /**
      * 查找当前用户所有歌单
      */
+
     /**
      * 查找当前用户选择歌单的所有音乐
      */

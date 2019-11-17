@@ -1,9 +1,10 @@
 package cn.mirrorming.blog.controller;
 
+import cn.mirrorming.blog.domain.dto.base.ResultData;
 import cn.mirrorming.blog.domain.po.Tag;
 import cn.mirrorming.blog.service.TagService;
-import cn.mirrorming.blog.domain.dto.base.ResultData;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * @since v1.0.0
  */
 @RestController
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping("tag")
 public class TagController {
     private final TagService tagService;

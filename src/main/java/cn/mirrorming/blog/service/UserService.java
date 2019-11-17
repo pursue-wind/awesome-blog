@@ -7,6 +7,7 @@ import cn.mirrorming.blog.exception.UserException;
 import cn.mirrorming.blog.mapper.auto.UsersMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
  * @date 2019/11/7 21:56
  */
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserService {
     private final UsersMapper usersMapper;
     private final PasswordEncoder passwordEncoder;

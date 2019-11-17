@@ -10,18 +10,18 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserException extends RuntimeException {
+public class ArticleException extends RuntimeException {
     /**
      * 错误码
      */
     private Integer statusCode;
 
-    public UserException(Integer statusCode, String message) {
+    public ArticleException(Integer statusCode, String message) {
         super(message);
         this.statusCode = statusCode;
     }
 
-    public UserException(String message) {
+    public ArticleException(String message) {
         super(message);
     }
 

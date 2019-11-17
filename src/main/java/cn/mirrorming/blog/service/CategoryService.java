@@ -5,6 +5,7 @@ import cn.mirrorming.blog.domain.po.Category;
 import cn.mirrorming.blog.mapper.auto.CategoryMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import static cn.mirrorming.blog.domain.constants.SystemConstant.EFFECT_ROW;
  * @since v1.0.0
  */
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CategoryService {
     /**
      * 父级 id 为 0 表示为根目录
