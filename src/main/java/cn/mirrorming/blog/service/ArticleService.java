@@ -18,7 +18,10 @@ import com.google.common.collect.Maps;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -31,6 +34,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
+@CacheConfig(cacheNames = "article")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ArticleService {
     private final ArticleMapper articleMapper;
@@ -68,6 +72,7 @@ public class ArticleService {
     /**
      * 归档页面，文章列表按照年份和月份归档
      */
+    @Cacheable(key = "#root.methodName")
     public HashMap<Integer, Map<Integer, List<Article>>> filedArticle() {
         HashMap<Integer, Map<Integer, List<Article>>> res = Maps.newHashMap();
         articleMapper.selectList(
@@ -96,12 +101,14 @@ public class ArticleService {
     /**
      * 查询文章，有文章内容
      */
+    @Cacheable(key = "'articleContent-'+#a0+'-'+#a1")
     @SneakyThrows(Exception.class)
     public ArticleDto selectArticleById(Integer id, String readPassword) {
         Article article = articleMapper.selectById(id);
         Optional.ofNullable(article).orElseThrow(() -> new ArticleException("文章不存在"));
 
-        if (!readPassword.equals(article.getReadPassword())) {
+        if (StringUtils.isNotBlank(article.getReadPassword()) &&
+                !StringUtils.equals(article.getReadPassword(), readPassword)) {
             throw new ArticleException("文章阅读密码错误");
         }
         //文章内容

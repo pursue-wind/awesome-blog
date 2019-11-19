@@ -2,8 +2,10 @@ package cn.mirrorming.blog.mapper.auto;
 
 import cn.mirrorming.blog.domain.po.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
 import java.util.List;
-import org.apache.ibatis.annotations.Param;import org.apache.ibatis.annotations.Select;
 
 public interface ArticleMapper extends BaseMapper<Article> {
     int updateBatch(List<Article> list);
@@ -19,4 +21,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     @Select("SELECT SUM(num) FROM (SELECT char_length(content) num  from article_content) AS tbnum")
     String selectWordNumberSum();
+
+
 }

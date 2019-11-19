@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 
 /**
- * @author mirror
+ * @author mireal
  * @date 2018/5/11 上午11:56
  */
 @Slf4j
@@ -48,12 +48,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BusinessException.class)
-    public ResultData BusinessExceptionHandler(BusinessException e) {
+    public ResultData businessExceptionHandler(BusinessException e) {
         return ResultData.fail(e.getMessage());
     }
 
     @ExceptionHandler(UserException.class)
-    public ResultData RegisterExceptionHandler(UserException e) {
+    public ResultData userExceptionHandler(UserException e) {
+        return ResultData.fail(e.getMessage());
+    }
+
+    @ExceptionHandler(ArticleException.class)
+    public ResultData articleExceptionHandler(ArticleException e) {
         return ResultData.fail(e.getMessage());
     }
 }
