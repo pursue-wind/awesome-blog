@@ -18,13 +18,13 @@ import org.springframework.social.security.SpringSocialConfigurer;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ImoocSpringSocialConfigurer extends SpringSocialConfigurer {
+public class MirealSpringSocialConfigurer extends SpringSocialConfigurer {
 
     private String filterProcessesUrl;
 
     private SocialAuthenticationFilterPostProcessor socialAuthenticationFilterPostProcessor;
 
-    public ImoocSpringSocialConfigurer(String filterProcessesUrl) {
+    public MirealSpringSocialConfigurer(String filterProcessesUrl) {
         this.filterProcessesUrl = filterProcessesUrl;
     }
 

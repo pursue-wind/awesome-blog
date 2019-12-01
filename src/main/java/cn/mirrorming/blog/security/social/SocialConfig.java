@@ -1,7 +1,7 @@
 package cn.mirrorming.blog.security.social;
 
 import cn.mirrorming.blog.config.properties.SecurityProperties;
-import cn.mirrorming.blog.security.social.support.ImoocSpringSocialConfigurer;
+import cn.mirrorming.blog.security.social.support.MirealSpringSocialConfigurer;
 import cn.mirrorming.blog.security.social.support.SocialAuthenticationFilterPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -64,7 +64,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
     public SpringSocialConfigurer mirealSocialSecurityConfig() {
         // SocialAuthenticationFilter过滤器默认拦截的请求是/auth开头，这里获取自己配置的处理路径/login
         String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
-        ImoocSpringSocialConfigurer configurer = new ImoocSpringSocialConfigurer(filterProcessesUrl);
+        MirealSpringSocialConfigurer configurer = new MirealSpringSocialConfigurer(filterProcessesUrl);
         configurer.signupUrl("/mireal-signUp.html");
         configurer.setSocialAuthenticationFilterPostProcessor(socialAuthenticationFilterPostProcessor);
         return configurer;
