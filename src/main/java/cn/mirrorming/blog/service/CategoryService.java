@@ -15,7 +15,7 @@ import static cn.mirrorming.blog.domain.constants.SystemConstant.EFFECT_ROW;
 
 
 /**
- * @Author mirror
+ * @author Mireal
  * @Date 2019/9/6 11:32
  * @since v1.0.0
  */

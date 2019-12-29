@@ -20,7 +20,7 @@ public class RedisService {
 
     /**
      * @Param: [key, value, seconds 超时时间]
-     * @Author: mirrorming
+     * @author: Mireal
      */
     public void set(Object key, Object value, long seconds) {
         redisTemplate.opsForValue().set(key, value, seconds, TimeUnit.SECONDS);

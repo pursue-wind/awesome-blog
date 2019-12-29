@@ -1,21 +1,26 @@
 package cn.mirrorming.blog.service;
 
 import cn.mirrorming.blog.domain.dto.MusicSearchDto;
-import cn.mirrorming.blog.domain.dto.music.NetEaseCommentDto;
-import cn.mirrorming.blog.domain.dto.music.NetEaseSearchMusicDto;
+import cn.mirrorming.blog.domain.dto.music.NetEaseCommentDTO;
+import cn.mirrorming.blog.domain.dto.music.NetEaseSearchMusicDTO;
 import cn.mirrorming.blog.domain.po.Music;
 import cn.mirrorming.blog.domain.po.MusicList;
 import cn.mirrorming.blog.mapper.auto.MusicListMapper;
 import cn.mirrorming.blog.mapper.auto.MusicMapper;
-import cn.mirrorming.blog.utils.MapperUtils;
-import cn.mirrorming.blog.utils.OkHttpClientUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Response;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +36,46 @@ import static cn.mirrorming.blog.domain.constants.SystemConstant.EFFECT_ROW;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MusicService {
     private static final String NETEASE_MUSIC_SEARCH_API = "http://music.163.com/api/search/pc";
+    private static final String BASE_NETEASE_MUSIC_SEARCH_API = "http://music.163.com/";
 
     private final MusicMapper musicMapper;
     private final MusicListMapper musicListMapper;
+
+    interface MusicApi {
+        @POST("api/search/pc")
+        @FormUrlEncoded
+        Call<NetEaseSearchMusicDTO> netEaseMusicSearch(@FieldMap Map<String, String> map);
+
+        @GET("api/v1/resource/comments/{id}")
+        Call<NetEaseCommentDTO> getNetEaseMusicComment(@Path("id") String id,
+                                                       @Query("limit") String limit,
+                                                       @Query("offset") String offset);
+    }
+
+    /**
+     * 构建 Retrofit
+     *
+     * @param baseUrl 请求 url
+     * @return Retrofit
+     */
+    private Retrofit builderRetrofit(String baseUrl) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.interceptors().add((Interceptor.Chain chain) -> {
+            Request request = chain.request();
+            Request.Builder requestBuilder = request.newBuilder()
+                    .header("Content-type", "application/json; charset=utf-8")
+                    .header("Accept", "application/json");
+            Request build = requestBuilder.build();
+            return chain.proceed(build);
+        });
+        OkHttpClient client = builder.build();
+
+        return new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
 
     /**
      * 网易云音乐搜索
@@ -42,9 +84,12 @@ public class MusicService {
      * @return
      * @throws Exception
      */
-    public NetEaseSearchMusicDto netEaseMusicSearch(Map params) throws Exception {
-        Response response = OkHttpClientUtil.getInstance().postData(NETEASE_MUSIC_SEARCH_API, params);
-        return MapperUtils.json2pojo(response.toString(), NetEaseSearchMusicDto.class);
+    public NetEaseSearchMusicDTO netEaseMusicSearch(Map<String, String> params) throws Exception {
+        log.info("网易云音乐搜索, params：{}", params);
+        MusicApi musicApi = builderRetrofit(BASE_NETEASE_MUSIC_SEARCH_API).create(MusicApi.class);
+
+        Call<NetEaseSearchMusicDTO> call = musicApi.netEaseMusicSearch(params);
+        return call.execute().body();
     }
 
     /**
@@ -56,21 +101,18 @@ public class MusicService {
      * @return
      * @throws Exception
      */
-    public NetEaseCommentDto getNetEaseMusicComment(String id, String pageSize, String pageNum) {
-        Response data = OkHttpClientUtil.getInstance().getData("http://music.163.com/api/v1/resource/comments/" + id + "?limit=" + pageSize + "&offset=" + pageNum);
-        NetEaseCommentDto dto = null;
-        try {
-            dto = MapperUtils.json2pojo(data.toString(), NetEaseCommentDto.class);
-        } catch (Exception e) {
-            log.warn("当前链接:{},获取歌曲评论出错：{}", "http://music.163.com/api/v1/resource/comments/" + id + "?limit=" + pageSize + "&offset=" + pageNum, e.getMessage());
-        }
-        return dto;
+    public NetEaseCommentDTO getNetEaseMusicComment(String id, String pageSize, String pageNum) throws IOException {
+        log.info("网易云音乐通过id获得评论内容, params：id-> {},pageSize -> {}, pageNum -> {}", id, pageSize, pageNum);
+        MusicApi musicApi = builderRetrofit(BASE_NETEASE_MUSIC_SEARCH_API).create(MusicApi.class);
+
+        Call<NetEaseCommentDTO> call = musicApi.getNetEaseMusicComment(id, pageSize, pageNum);
+        return call.execute().body();
     }
 
     /**
      * 查找当前用户所有歌单
      *
-     * @return
+     * @return List<MusicList>
      */
     public List<MusicList> selectMusicListByUser(Integer userId) {
         return musicListMapper.selectList(
@@ -101,9 +143,7 @@ public class MusicService {
      * 添加歌单
      */
     public boolean updateMusicList(MusicList musicList) {
-        return musicListMapper.update(
-                musicList,
-                new QueryWrapper<>()) == EFFECT_ROW;
+        return musicListMapper.update(musicList, new QueryWrapper<>()) == EFFECT_ROW;
     }
 
     /**

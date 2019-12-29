@@ -10,7 +10,7 @@ import cn.mirrorming.blog.mapper.auto.ArticleContentMapper;
 import cn.mirrorming.blog.mapper.auto.ArticleMapper;
 import cn.mirrorming.blog.mapper.auto.CategoryMapper;
 import cn.mirrorming.blog.mapper.auto.UsersMapper;
-import cn.mirrorming.blog.utils.MapperUtils;
+import cn.mirrorming.blog.utils.JacksonUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -28,7 +28,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @Author mirror
+ * @author Mireal
  * @Date 2019/9/6 11:32
  * @since v1.0.0
  */
@@ -60,7 +60,7 @@ public class ArticleService {
                                 .article(article)
                                 .user(usersMapper.selectUserById(article.getUserId()))
                                 .category(categoryMapper.selectById(article.getCategoryId()))
-                                .tags(MapperUtils.json2list((String) article.getTag(), Tag.class))
+                                .tags(JacksonUtils.json2list((String) article.getTag(), Tag.class))
                                 .build();
                     } catch (Exception e) {
                         log.info("标签json转换出错：{}", e.getMessage());
@@ -123,7 +123,7 @@ public class ArticleService {
                 //文章分类信息
                 .category(categoryMapper.selectById(article.getCategoryId()))
                 //文章标签列表
-                .tags(MapperUtils.json2list((String) article.getTag(), Tag.class))
+                .tags(JacksonUtils.json2list((String) article.getTag(), Tag.class))
                 .build();
     }
 
