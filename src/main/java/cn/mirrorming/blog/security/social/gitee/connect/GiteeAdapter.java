@@ -7,7 +7,7 @@ import org.springframework.social.connect.ConnectionValues;
 import org.springframework.social.connect.UserProfile;
 
 /**
- * @Author Mireal
+ * @author Mireal
  * @Version 1.0
  */
 public class GiteeAdapter implements ApiAdapter<Gitee> {

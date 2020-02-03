@@ -24,5 +24,5 @@ The following guides illustrate how to use some features concretely:
 * [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
 * [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 * [Messaging with Redis](https://spring.io/guides/gs/messaging-redis/)
-* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
+* [Accessing fansData with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
 

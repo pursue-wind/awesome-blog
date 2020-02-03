@@ -1,4 +1,4 @@
-package cn.mirrorming.blog.event;
+package cn.mirrorming.blog.event.article;
 
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;

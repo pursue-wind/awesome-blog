@@ -37,7 +37,7 @@ import static cn.mirrorming.blog.domain.constants.SystemConstant.EFFECT_ROW;
 public class MusicService {
     private static final String NETEASE_MUSIC_SEARCH_API = "http://music.163.com/api/search/pc";
     private static final String BASE_NETEASE_MUSIC_SEARCH_API = "http://music.163.com/";
-
+    private static final String DEFAULT_LRC = "[00:00.000] Default Lyric \\n [00:03.000] 无歌词，请您欣赏";
     private final MusicMapper musicMapper;
     private final MusicListMapper musicListMapper;
 
@@ -85,7 +85,7 @@ public class MusicService {
      * @throws Exception
      */
     public NetEaseSearchMusicDTO netEaseMusicSearch(Map<String, String> params) throws Exception {
-        log.info("网易云音乐搜索, params：{}", params);
+        log.info("音乐搜索, params：{}", params);
         MusicApi musicApi = builderRetrofit(BASE_NETEASE_MUSIC_SEARCH_API).create(MusicApi.class);
 
         Call<NetEaseSearchMusicDTO> call = musicApi.netEaseMusicSearch(params);

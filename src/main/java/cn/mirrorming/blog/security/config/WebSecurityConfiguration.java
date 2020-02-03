@@ -16,7 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 /**
  * 包括资源服务器配置
  *
- * @Author mirror
+ * @author Mireal
  * @Date 2019/9/4 14:13
  * @since v1.0.0
  */

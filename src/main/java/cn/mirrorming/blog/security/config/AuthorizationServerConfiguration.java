@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 /**
  * 认证服务器配置
  *
- * @Author mirror
+ * @author Mireal
  * @Date 2019/9/4 14:06
  * @since v1.0.0
  */

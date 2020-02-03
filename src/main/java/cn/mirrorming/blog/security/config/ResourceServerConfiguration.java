@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.social.security.SpringSocialConfigurer;
 
 /**
- * @Author mirror
+ * @author Mireal
  * @Date 2019/9/6 17:39
  * @since v1.0.0
  */
@@ -31,7 +31,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and()
                 .authorizeRequests()
                 // 以下为配置所需保护的资源路径及权限，需要与认证服务器配置的授权部分对应
-                .antMatchers("/oauth/token").permitAll()
+                .antMatchers("/oauth/token", "/auth/qq", "/validate/code/image").permitAll()
                 .antMatchers("/").hasAuthority("SystemContent")
                 .antMatchers("/view/**").hasAuthority("SystemUserView")
                 .antMatchers("/insert/**").hasAuthority("SystemContentInsert")

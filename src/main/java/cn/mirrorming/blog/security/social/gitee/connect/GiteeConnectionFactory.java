@@ -4,7 +4,7 @@ import cn.mirrorming.blog.security.social.gitee.api.Gitee;
 import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 
 /**
- * @Author Mireal
+ * @author Mireal
  * @Date 2019-11-13 21:49
  * @Version 1.0
  */

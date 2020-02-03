@@ -10,8 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * OKHttp3
  *
- * @Author mirror
- * @Date 2019/9/6 10:19
+ * @author Mireal
  * @since v1.0.0
  */
 public class OkHttpClientUtil {
@@ -23,15 +22,14 @@ public class OkHttpClientUtil {
 
 
     private OkHttpClientUtil() {
-        okHttpClient =
-                new OkHttpClient.Builder()
-                        // 读取超时
-                        .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-                        // 连接超时
-                        .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
-                        //写入超时
-                        .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-                        .build();
+        okHttpClient = new OkHttpClient.Builder()
+                // 读取超时
+                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                // 连接超时
+                .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                //写入超时
+                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+                .build();
     }
 
     private static class SingletonHolder {
@@ -239,4 +237,29 @@ public class OkHttpClientUtil {
         void failed(Call call, IOException e);
     }
 
+    public String doGet(String url) {
+        Response response = null;
+        String string = null;
+        try {
+            Request request = new Request.Builder()
+                    .url(url)
+                    .get().build();
+            long start = System.currentTimeMillis();
+            response = okHttpClient.newCall(request).execute();
+            long end = System.currentTimeMillis();
+
+            string = response.body().string();
+
+            String cost = (end - start) + "";
+            HttpUrl url1 = response.request().url();
+        } catch (Exception e) {
+            throw new RuntimeException("OkHttp3Util Get Error", e);
+        }
+
+        if (!response.isSuccessful() || response.body() == null) {
+            throw new RuntimeException("Unexpected code:" + response);
+        }
+
+        return string;
+    }
 }

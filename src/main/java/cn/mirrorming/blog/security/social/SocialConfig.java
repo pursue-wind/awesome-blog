@@ -79,7 +79,8 @@ public class SocialConfig extends SocialConfigurerAdapter {
      */
     @Bean
     public ProviderSignInUtils providerSignInUtils(ConnectionFactoryLocator connectionFactoryLocator) {
-        return new ProviderSignInUtils(connectionFactoryLocator,
+        return new ProviderSignInUtils(
+                connectionFactoryLocator,
                 getUsersConnectionRepository(connectionFactoryLocator)) {
         };
     }

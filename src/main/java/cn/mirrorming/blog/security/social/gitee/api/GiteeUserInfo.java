@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @Description Gitee 用户信息
- * @Author Mireal
+ * @author Mireal
  * @Version 1.0
  */
 @Data

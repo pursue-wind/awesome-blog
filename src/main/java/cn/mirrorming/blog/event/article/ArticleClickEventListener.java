@@ -1,4 +1,4 @@
-package cn.mirrorming.blog.event;
+package cn.mirrorming.blog.event.article;
 
 
 import cn.mirrorming.blog.mapper.auto.ArticleMapper;

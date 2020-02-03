@@ -6,6 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
+/**
+ * @author Mireal
+ */
 @EnableConfigurationProperties(SecurityProperties.class)
 @MapperScan(basePackages = "cn.mirrorming.blog.mapper")
 @SpringBootApplication

@@ -17,11 +17,14 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @Author Mireal
+ * @author Mireal
  * @Version 1.0
  */
 @Slf4j
 public class GiteeOAuth2Template extends OAuth2Template {
+
+    private static final String GITEE_URL = "https://gitee.com/oauth/token";
+
     GiteeOAuth2Template(String clientId, String clientSecret, String authorizeUrl, String accessTokenUrl) {
         super(clientId, clientSecret, authorizeUrl, accessTokenUrl);
         setUseParametersForClientAuthentication(true);
@@ -40,19 +43,18 @@ public class GiteeOAuth2Template extends OAuth2Template {
         String code = parameters.getFirst("code");
         String redirectUri = parameters.getFirst("redirect_uri");
 
-        String url = "https://gitee.com/oauth/token";
-
         ImmutableMap<String, String> params = ImmutableMap.<String, String>builder()
-                .put("code", code)
+                .put("code", Objects.requireNonNull(code))
                 .put("grant_type", "authorization_code")
-                .put("client_id", clientId)
-                .put("client_secret", clientSecret)
-                .put("redirect_uri", redirectUri)
+                .put("client_id", Objects.requireNonNull(clientId))
+                .put("client_secret", Objects.requireNonNull(clientSecret))
+                .put("redirect_uri", Objects.requireNonNull(redirectUri))
                 .build();
-
-        Response response = OkHttpClientUtil.getInstance().postData(url, params);
-
+        //  发送 post 请求
+        Response response = OkHttpClientUtil.getInstance().postData(GITEE_URL, params);
+        //  拿到返回
         String responseBody = Objects.requireNonNull(response.body()).string();
+
         log.info("获取accessToke的响应：" + responseBody);
         Map<String, Object> object = JacksonUtils.json2map(responseBody);
         String accessToken = (String) object.get("access_token");

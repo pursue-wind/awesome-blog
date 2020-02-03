@@ -2,17 +2,14 @@ package cn.mirrorming.blog.controller;
 
 import cn.mirrorming.blog.domain.dto.MusicSearchDto;
 import cn.mirrorming.blog.domain.dto.base.ResultData;
-import cn.mirrorming.blog.domain.dto.music.NetEaseCommentDto;
-import cn.mirrorming.blog.domain.dto.music.NetEaseSearchMusicDto;
+import cn.mirrorming.blog.domain.dto.music.NetEaseCommentDTO;
+import cn.mirrorming.blog.domain.dto.music.NetEaseSearchMusicDTO;
 import cn.mirrorming.blog.service.MusicService;
 import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Mireal
@@ -24,15 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("music")
 public class MusicController {
+
     private final MusicService musicService;
 
     /**
      * 网易云音乐搜索
      *
      * @param musicSearchDto {@link MusicSearchDto}
-     * @return ResultData {@link NetEaseSearchMusicDto}
+     * @return ResultData {@link NetEaseSearchMusicDTO}
      */
-    @GetMapping("search")
+    @PostMapping("search")
     public ResultData musicSearch(@RequestBody MusicSearchDto musicSearchDto) throws Exception {
         ImmutableMap<String, String> params = ImmutableMap.<String, String>builder()
                 .put("s", musicSearchDto.getS())
@@ -40,8 +38,8 @@ public class MusicController {
                 .put("limit", musicSearchDto.getLimit())
                 .put("type", musicSearchDto.getType())
                 .build();
-        NetEaseSearchMusicDto netEaseSearchMusicDto = musicService.netEaseMusicSearch(params);
-        return ResultData.succeed(netEaseSearchMusicDto);
+        NetEaseSearchMusicDTO musicSearchDTO = musicService.netEaseMusicSearch(params);
+        return ResultData.succeed(musicSearchDTO);
     }
 
     /**
@@ -52,9 +50,9 @@ public class MusicController {
      * @param pageNum  当前页
      */
     @GetMapping("/comment")
-    public ResultData getMusicCommentById(String id, String pageSize, String pageNum) {
-        NetEaseCommentDto netEaseMusicComment = musicService.getNetEaseMusicComment(id, pageSize, pageNum);
-        return ResultData.succeed(netEaseMusicComment);
+    public ResultData getMusicCommentById(String id, String pageSize, String pageNum) throws Exception {
+        NetEaseCommentDTO commentDTO = musicService.getNetEaseMusicComment(id, pageSize, pageNum);
+        return ResultData.succeed(commentDTO);
     }
     /**
      * 查找当前用户所有歌单
@@ -67,6 +65,8 @@ public class MusicController {
     /**
      * 歌单添加音乐
      */
+    public void addMusic() {
 
+    }
 
 }

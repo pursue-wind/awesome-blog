@@ -4,7 +4,7 @@ import cn.mirrorming.blog.domain.dto.article.ArticleDto;
 import cn.mirrorming.blog.domain.dto.article.ArticleListDto;
 import cn.mirrorming.blog.domain.dto.base.ResultData;
 import cn.mirrorming.blog.domain.po.Article;
-import cn.mirrorming.blog.event.ArticleClickEvent;
+import cn.mirrorming.blog.event.article.ArticleClickEvent;
 import cn.mirrorming.blog.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author mirror
- * @Date 2019/9/6 11:32
+ * @author Mireal
  * @since v1.0.0
  */
 @RestController

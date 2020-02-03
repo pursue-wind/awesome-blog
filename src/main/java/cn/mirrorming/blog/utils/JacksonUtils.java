@@ -1,11 +1,13 @@
 package cn.mirrorming.blog.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,12 +19,11 @@ import java.util.Map;
  * <p>Title: MapperUtils</p>
  * <p>Description: </p>
  *
- * @Author mirror
- * @Date 2019/9/6 10:19
+ * @author Mireal
  * @since v1.0.0
  */
-
-public class MapperUtils {
+@Slf4j
+public class JacksonUtils {
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
     public static ObjectMapper getInstance() {
@@ -36,8 +37,13 @@ public class MapperUtils {
      * @return
      * @throws Exception
      */
-    public static String obj2json(Object obj) throws Exception {
-        return objectMapper.writeValueAsString(obj);
+    public static String obj2json(Object obj) {
+        try {
+            return objectMapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            log.error("obj2json错误, obj: {}", obj);
+            throw new RuntimeException("解析json错误");
+        }
     }
 
     /**
@@ -47,7 +53,7 @@ public class MapperUtils {
      * @return
      * @throws Exception
      */
-    public static String obj2jsonIgnoreNull(Object obj) throws Exception {
+    public static String obj2jsonIgnoreNull(Object obj) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return mapper.writeValueAsString(obj);
@@ -82,8 +88,11 @@ public class MapperUtils {
     /**
      * 字符串转换为 Map<String, T>
      */
+    /**
+     * 字符串转换为 Map<String, T>
+     */
     public static <T> Map<String, T> json2map(String jsonString, Class<T> clazz) throws Exception {
-        Map<String, Map<String, Object>> map = objectMapper.readValue(jsonString, new TypeReference<Map<String, T>>() {
+        Map<String, Map<String, Object>> map = (Map<String, Map<String, Object>>) objectMapper.readValue(jsonString, new TypeReference<Map<String, T>>() {
         });
         Map<String, T> result = new HashMap<String, T>();
         for (Map.Entry<String, Map<String, Object>> entry : map.entrySet()) {

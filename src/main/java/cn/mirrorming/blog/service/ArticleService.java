@@ -147,4 +147,3 @@ public class ArticleService {
         return articleMapper.selectWordNumberSum();
     }
 }
-

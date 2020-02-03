@@ -16,7 +16,7 @@ import org.springframework.social.connect.UsersConnectionRepository;
 
 /**
  * @Description gitee 社交登录的自动配置
- * @Author Mireal
+ * @author Mireal
  * @Version 1.0
  */
 @Configuration
