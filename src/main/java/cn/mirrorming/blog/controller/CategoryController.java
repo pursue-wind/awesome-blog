@@ -3,6 +3,7 @@ package cn.mirrorming.blog.controller;
 import cn.mirrorming.blog.domain.dto.base.ResultData;
 import cn.mirrorming.blog.domain.po.Category;
 import cn.mirrorming.blog.service.CategoryService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
  * @Date 2019/9/6 11:32
  * @since v1.0.0
  */
+@Api(tags = "分类")
 @RestController
 @RequestMapping("category")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

@@ -3,6 +3,7 @@ package cn.mirrorming.blog.controller;
 import cn.mirrorming.blog.domain.dto.base.ResultData;
 import cn.mirrorming.blog.domain.po.Tag;
 import cn.mirrorming.blog.service.TagService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
  * @Date 2019/9/6 11:32
  * @since v1.0.0
  */
+@Api(tags = "标签")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping("tag")

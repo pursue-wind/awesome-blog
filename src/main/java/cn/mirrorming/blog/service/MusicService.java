@@ -114,7 +114,7 @@ public class MusicService {
      *
      * @return List<MusicList>
      */
-    public List<MusicList> selectMusicListByUser(Integer userId) {
+    public List<MusicList> addMusicListByUser(Integer userId) {
         return musicListMapper.selectList(
                 new QueryWrapper<MusicList>()
                         .orderByDesc(MusicList.COL_CREATE_TIME)
@@ -140,7 +140,7 @@ public class MusicService {
     }
 
     /**
-     * 添加歌单
+     * 更新歌单
      */
     public boolean updateMusicList(MusicList musicList) {
         return musicListMapper.update(musicList, new QueryWrapper<>()) == EFFECT_ROW;
@@ -149,7 +149,7 @@ public class MusicService {
     /**
      * 歌单添加音乐
      */
-    public boolean selectMusicListByUser(Music music) {
+    public boolean addMusicListByUser(Music music) {
         return musicMapper.insert(music) == EFFECT_ROW;
     }
 }

@@ -6,6 +6,7 @@ import cn.mirrorming.blog.domain.dto.base.ResultData;
 import cn.mirrorming.blog.domain.po.Article;
 import cn.mirrorming.blog.event.article.ArticleClickEvent;
 import cn.mirrorming.blog.service.ArticleService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @author Mireal
  * @since v1.0.0
  */
+@Api(tags = "文章")
 @RestController
 @RequestMapping("article")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

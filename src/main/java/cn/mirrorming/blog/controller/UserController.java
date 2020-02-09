@@ -9,6 +9,7 @@ import cn.mirrorming.blog.service.UserService;
 import cn.mirrorming.blog.utils.JacksonUtils;
 import cn.mirrorming.blog.utils.OkHttpClientUtil;
 import com.google.common.collect.ImmutableMap;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
@@ -31,6 +32,7 @@ import java.util.Optional;
  * @Date 2019/9/8 11:13
  * @since v1.0.0
  */
+@Api(tags = "用户")
 @Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

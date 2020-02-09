@@ -4,6 +4,7 @@ import cn.mirrorming.blog.domain.dto.base.ResultData;
 import cn.mirrorming.blog.domain.dto.bilibili.BilibiliFans;
 import cn.mirrorming.blog.domain.dto.bilibili.BilibiliVideo;
 import cn.mirrorming.blog.service.BilibiliService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version V1.0
  * @date 2019/12/27 12:08
  */
+@Api(tags = "bilibili")
 @RestController
 @RequestMapping("bilibili")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
