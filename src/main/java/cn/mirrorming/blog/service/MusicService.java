@@ -1,10 +1,13 @@
 package cn.mirrorming.blog.service;
 
 import cn.mirrorming.blog.domain.dto.MusicSearchDto;
+import cn.mirrorming.blog.domain.dto.MusicSearchResDTO;
+import cn.mirrorming.blog.domain.dto.music.Artists;
 import cn.mirrorming.blog.domain.dto.music.NetEaseCommentDTO;
 import cn.mirrorming.blog.domain.dto.music.NetEaseSearchMusicDTO;
 import cn.mirrorming.blog.domain.po.Music;
 import cn.mirrorming.blog.domain.po.MusicList;
+import cn.mirrorming.blog.exception.AppException;
 import cn.mirrorming.blog.mapper.auto.MusicListMapper;
 import cn.mirrorming.blog.mapper.auto.MusicMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -23,6 +26,8 @@ import retrofit2.http.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static cn.mirrorming.blog.domain.constants.SystemConstant.EFFECT_ROW;
 
@@ -37,6 +42,9 @@ import static cn.mirrorming.blog.domain.constants.SystemConstant.EFFECT_ROW;
 public class MusicService {
     private static final String NETEASE_MUSIC_SEARCH_API = "http://music.163.com/api/search/pc";
     private static final String BASE_NETEASE_MUSIC_SEARCH_API = "http://music.163.com/";
+    public static final String MUSIC_URL_FORMAT = "http://music.163.com/song/media/outer/url?id=%s.mp3";
+    public static final String LYRICS_URL_FORMAT = "http://music.163.com/api/song/media?id=%s";
+    public static final String COMMENT_URL_FORMAT = "http://music.163.com/api/v1/resource/comments/R_SO_4_%s";
     private static final String DEFAULT_LRC = "[00:00.000] Default Lyric \\n [00:03.000] 无歌词，请您欣赏";
     private final MusicMapper musicMapper;
     private final MusicListMapper musicListMapper;
@@ -84,12 +92,29 @@ public class MusicService {
      * @return
      * @throws Exception
      */
-    public NetEaseSearchMusicDTO netEaseMusicSearch(Map<String, String> params) throws Exception {
+    public List<MusicSearchResDTO> netEaseMusicSearch(Map<String, String> params) throws Exception {
         log.info("音乐搜索, params：{}", params);
         MusicApi musicApi = builderRetrofit(BASE_NETEASE_MUSIC_SEARCH_API).create(MusicApi.class);
 
         Call<NetEaseSearchMusicDTO> call = musicApi.netEaseMusicSearch(params);
-        return call.execute().body();
+        NetEaseSearchMusicDTO musicDTO = call.execute().body();
+        Optional.ofNullable(musicDTO).orElseThrow(() -> new AppException("没有搜索结果"));
+        return musicDTO.getResult()
+                .getSongs()
+                .stream()
+                .map(songs -> MusicSearchResDTO.builder()
+                        .musicId(String.valueOf(songs.getId()))
+                        .name(songs.getName())
+                        .artists(songs.getArtists()
+                                .stream()
+                                .map(Artists::getName)
+                                .collect(Collectors.toList()))
+                        .albumName(songs.getAlbum().getName())
+                        .coverUrl(songs.getAlbum().getPicUrl())
+                        .url(String.format(MUSIC_URL_FORMAT, songs.getId()))
+                        .lrcUrl(String.format(LYRICS_URL_FORMAT, songs.getId()))
+                        .build())
+                .collect(Collectors.toList());
     }
 
     /**

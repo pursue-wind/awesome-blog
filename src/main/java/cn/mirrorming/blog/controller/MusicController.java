@@ -1,9 +1,9 @@
 package cn.mirrorming.blog.controller;
 
 import cn.mirrorming.blog.domain.dto.MusicSearchDto;
+import cn.mirrorming.blog.domain.dto.MusicSearchResDTO;
 import cn.mirrorming.blog.domain.dto.base.ResultData;
 import cn.mirrorming.blog.domain.dto.music.NetEaseCommentDTO;
-import cn.mirrorming.blog.domain.dto.music.NetEaseSearchMusicDTO;
 import cn.mirrorming.blog.domain.po.Music;
 import cn.mirrorming.blog.domain.po.MusicList;
 import cn.mirrorming.blog.service.MusicService;
@@ -28,14 +28,13 @@ import java.util.List;
 @RestController
 @RequestMapping("music")
 public class MusicController {
-
     private final MusicService musicService;
 
     /**
      * 网易云音乐搜索
      *
      * @param musicSearchDto {@link MusicSearchDto}
-     * @return ResultData {@link NetEaseSearchMusicDTO}
+     * @return ResultData {@link MusicSearchResDTO}
      */
     @ApiOperation(value = "网易云音乐搜索")
     @PostMapping("search")
@@ -46,8 +45,8 @@ public class MusicController {
                 .put("limit", musicSearchDto.getLimit())
                 .put("type", musicSearchDto.getType())
                 .build();
-        NetEaseSearchMusicDTO musicSearchDTO = musicService.netEaseMusicSearch(params);
-        return ResultData.succeed(musicSearchDTO);
+        List<MusicSearchResDTO> resDTOList = musicService.netEaseMusicSearch(params);
+        return ResultData.succeed(resDTOList);
     }
 
     /**
