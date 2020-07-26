@@ -1,0 +1,1062 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mirrorming.blog.mapper.generate.ArticleMapper">
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Article">
+    <!--@Table article-->
+    <id column="id" property="id" />
+    <result column="user_id" property="userId" />
+    <result column="title" property="title" />
+    <result column="ip" property="ip" />
+    <result column="click" property="click" />
+    <result column="category_id" property="categoryId" />
+    <result column="is_private" property="isPrivate" />
+    <result column="is_support" property="isSupport" />
+    <result column="is_up" property="isUp" />
+    <result column="read_password" property="readPassword" />
+    <result column="comment_id" property="commentId" />
+    <result column="summary" property="summary" />
+    <result column="is_draft" property="isDraft" />
+    <result column="liked" property="liked" />
+    <result column="tag" property="tag" />
+    <result column="score" property="score" />
+    <result column="img" property="img" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, title, ip, click, category_id, is_private, is_support, is_up, read_password, 
+    comment_id, summary, is_draft, liked, tag, score, img, create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update article
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.userId}
+        </foreach>
+      </trim>
+      <trim prefix="title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.title}
+        </foreach>
+      </trim>
+      <trim prefix="ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.ip}
+        </foreach>
+      </trim>
+      <trim prefix="click = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.click}
+        </foreach>
+      </trim>
+      <trim prefix="category_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.categoryId}
+        </foreach>
+      </trim>
+      <trim prefix="is_private = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isPrivate}
+        </foreach>
+      </trim>
+      <trim prefix="is_support = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isSupport}
+        </foreach>
+      </trim>
+      <trim prefix="is_up = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isUp}
+        </foreach>
+      </trim>
+      <trim prefix="read_password = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.readPassword}
+        </foreach>
+      </trim>
+      <trim prefix="comment_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.commentId}
+        </foreach>
+      </trim>
+      <trim prefix="summary = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.summary}
+        </foreach>
+      </trim>
+      <trim prefix="is_draft = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isDraft}
+        </foreach>
+      </trim>
+      <trim prefix="liked = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.liked}
+        </foreach>
+      </trim>
+      <trim prefix="tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.tag}
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.score}
+        </foreach>
+      </trim>
+      <trim prefix="img = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.img}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createTime}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.updateTime}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update article
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.userId != null">
+            when id = #{item.id} then #{item.userId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.title != null">
+            when id = #{item.id} then #{item.title}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.ip != null">
+            when id = #{item.id} then #{item.ip}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="click = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.click != null">
+            when id = #{item.id} then #{item.click}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="category_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.categoryId != null">
+            when id = #{item.id} then #{item.categoryId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_private = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isPrivate != null">
+            when id = #{item.id} then #{item.isPrivate}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_support = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isSupport != null">
+            when id = #{item.id} then #{item.isSupport}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_up = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isUp != null">
+            when id = #{item.id} then #{item.isUp}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="read_password = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.readPassword != null">
+            when id = #{item.id} then #{item.readPassword}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="comment_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.commentId != null">
+            when id = #{item.id} then #{item.commentId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="summary = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.summary != null">
+            when id = #{item.id} then #{item.summary}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_draft = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isDraft != null">
+            when id = #{item.id} then #{item.isDraft}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="liked = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.liked != null">
+            when id = #{item.id} then #{item.liked}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.tag != null">
+            when id = #{item.id} then #{item.tag}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.score != null">
+            when id = #{item.id} then #{item.score}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="img = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.img != null">
+            when id = #{item.id} then #{item.img}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id} then #{item.createTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id} then #{item.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into article
+    (user_id, title, ip, click, category_id, is_private, is_support, is_up, read_password, 
+      comment_id, summary, is_draft, liked, tag, score, img, create_time, update_time
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.userId}, #{item.title}, #{item.ip}, #{item.click}, #{item.categoryId}, #{item.isPrivate}, 
+        #{item.isSupport}, #{item.isUp}, #{item.readPassword}, #{item.commentId}, #{item.summary}, 
+        #{item.isDraft}, #{item.liked}, #{item.tag}, #{item.score}, #{item.img}, #{item.createTime}, 
+        #{item.updateTime})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Article" useGeneratedKeys="true">
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      user_id,
+      title,
+      ip,
+      click,
+      category_id,
+      is_private,
+      is_support,
+      is_up,
+      read_password,
+      comment_id,
+      summary,
+      is_draft,
+      liked,
+      tag,
+      score,
+      img,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{userId},
+      #{title},
+      #{ip},
+      #{click},
+      #{categoryId},
+      #{isPrivate},
+      #{isSupport},
+      #{isUp},
+      #{readPassword},
+      #{commentId},
+      #{summary},
+      #{isDraft},
+      #{liked},
+      #{tag},
+      #{score},
+      #{img},
+      #{createTime},
+      #{updateTime},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      user_id = #{userId},
+      title = #{title},
+      ip = #{ip},
+      click = #{click},
+      category_id = #{categoryId},
+      is_private = #{isPrivate},
+      is_support = #{isSupport},
+      is_up = #{isUp},
+      read_password = #{readPassword},
+      comment_id = #{commentId},
+      summary = #{summary},
+      is_draft = #{isDraft},
+      liked = #{liked},
+      tag = #{tag},
+      score = #{score},
+      img = #{img},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Article" useGeneratedKeys="true">
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="click != null">
+        click,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="isPrivate != null">
+        is_private,
+      </if>
+      <if test="isSupport != null">
+        is_support,
+      </if>
+      <if test="isUp != null">
+        is_up,
+      </if>
+      <if test="readPassword != null">
+        read_password,
+      </if>
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+      <if test="isDraft != null">
+        is_draft,
+      </if>
+      <if test="liked != null">
+        liked,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="userId != null">
+        #{userId},
+      </if>
+      <if test="title != null">
+        #{title},
+      </if>
+      <if test="ip != null">
+        #{ip},
+      </if>
+      <if test="click != null">
+        #{click},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId},
+      </if>
+      <if test="isPrivate != null">
+        #{isPrivate},
+      </if>
+      <if test="isSupport != null">
+        #{isSupport},
+      </if>
+      <if test="isUp != null">
+        #{isUp},
+      </if>
+      <if test="readPassword != null">
+        #{readPassword},
+      </if>
+      <if test="commentId != null">
+        #{commentId},
+      </if>
+      <if test="summary != null">
+        #{summary},
+      </if>
+      <if test="isDraft != null">
+        #{isDraft},
+      </if>
+      <if test="liked != null">
+        #{liked},
+      </if>
+      <if test="tag != null">
+        #{tag},
+      </if>
+      <if test="score != null">
+        #{score},
+      </if>
+      <if test="img != null">
+        #{img},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId},
+      </if>
+      <if test="title != null">
+        title = #{title},
+      </if>
+      <if test="ip != null">
+        ip = #{ip},
+      </if>
+      <if test="click != null">
+        click = #{click},
+      </if>
+      <if test="categoryId != null">
+        category_id = #{categoryId},
+      </if>
+      <if test="isPrivate != null">
+        is_private = #{isPrivate},
+      </if>
+      <if test="isSupport != null">
+        is_support = #{isSupport},
+      </if>
+      <if test="isUp != null">
+        is_up = #{isUp},
+      </if>
+      <if test="readPassword != null">
+        read_password = #{readPassword},
+      </if>
+      <if test="commentId != null">
+        comment_id = #{commentId},
+      </if>
+      <if test="summary != null">
+        summary = #{summary},
+      </if>
+      <if test="isDraft != null">
+        is_draft = #{isDraft},
+      </if>
+      <if test="liked != null">
+        liked = #{liked},
+      </if>
+      <if test="tag != null">
+        tag = #{tag},
+      </if>
+      <if test="score != null">
+        score = #{score},
+      </if>
+      <if test="img != null">
+        img = #{img},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Article">
+    <!--@Table article-->
+    <id column="id" property="id" />
+    <result column="user_id" property="userId" />
+    <result column="title" property="title" />
+    <result column="ip" property="ip" />
+    <result column="click" property="click" />
+    <result column="category_id" property="categoryId" />
+    <result column="is_private" property="isPrivate" />
+    <result column="is_support" property="isSupport" />
+    <result column="is_up" property="isUp" />
+    <result column="read_password" property="readPassword" />
+    <result column="comment_id" property="commentId" />
+    <result column="summary" property="summary" />
+    <result column="is_draft" property="isDraft" />
+    <result column="liked" property="liked" />
+    <result column="tag" property="tag" />
+    <result column="score" property="score" />
+    <result column="img" property="img" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, title, ip, click, category_id, is_private, is_support, is_up, read_password, 
+    comment_id, summary, is_draft, liked, tag, score, img, create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update article
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.userId}
+        </foreach>
+      </trim>
+      <trim prefix="title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.title}
+        </foreach>
+      </trim>
+      <trim prefix="ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.ip}
+        </foreach>
+      </trim>
+      <trim prefix="click = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.click}
+        </foreach>
+      </trim>
+      <trim prefix="category_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.categoryId}
+        </foreach>
+      </trim>
+      <trim prefix="is_private = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isPrivate}
+        </foreach>
+      </trim>
+      <trim prefix="is_support = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isSupport}
+        </foreach>
+      </trim>
+      <trim prefix="is_up = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isUp}
+        </foreach>
+      </trim>
+      <trim prefix="read_password = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.readPassword}
+        </foreach>
+      </trim>
+      <trim prefix="comment_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.commentId}
+        </foreach>
+      </trim>
+      <trim prefix="summary = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.summary}
+        </foreach>
+      </trim>
+      <trim prefix="is_draft = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isDraft}
+        </foreach>
+      </trim>
+      <trim prefix="liked = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.liked}
+        </foreach>
+      </trim>
+      <trim prefix="tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.tag}
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.score}
+        </foreach>
+      </trim>
+      <trim prefix="img = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.img}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createTime}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.updateTime}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update article
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.userId != null">
+            when id = #{item.id} then #{item.userId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.title != null">
+            when id = #{item.id} then #{item.title}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.ip != null">
+            when id = #{item.id} then #{item.ip}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="click = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.click != null">
+            when id = #{item.id} then #{item.click}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="category_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.categoryId != null">
+            when id = #{item.id} then #{item.categoryId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_private = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isPrivate != null">
+            when id = #{item.id} then #{item.isPrivate}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_support = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isSupport != null">
+            when id = #{item.id} then #{item.isSupport}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_up = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isUp != null">
+            when id = #{item.id} then #{item.isUp}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="read_password = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.readPassword != null">
+            when id = #{item.id} then #{item.readPassword}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="comment_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.commentId != null">
+            when id = #{item.id} then #{item.commentId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="summary = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.summary != null">
+            when id = #{item.id} then #{item.summary}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_draft = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isDraft != null">
+            when id = #{item.id} then #{item.isDraft}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="liked = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.liked != null">
+            when id = #{item.id} then #{item.liked}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.tag != null">
+            when id = #{item.id} then #{item.tag}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.score != null">
+            when id = #{item.id} then #{item.score}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="img = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.img != null">
+            when id = #{item.id} then #{item.img}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id} then #{item.createTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id} then #{item.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into article
+    (user_id, title, ip, click, category_id, is_private, is_support, is_up, read_password, 
+      comment_id, summary, is_draft, liked, tag, score, img, create_time, update_time
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.userId}, #{item.title}, #{item.ip}, #{item.click}, #{item.categoryId}, #{item.isPrivate}, 
+        #{item.isSupport}, #{item.isUp}, #{item.readPassword}, #{item.commentId}, #{item.summary}, 
+        #{item.isDraft}, #{item.liked}, #{item.tag}, #{item.score}, #{item.img}, #{item.createTime}, 
+        #{item.updateTime})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Article" useGeneratedKeys="true">
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      user_id,
+      title,
+      ip,
+      click,
+      category_id,
+      is_private,
+      is_support,
+      is_up,
+      read_password,
+      comment_id,
+      summary,
+      is_draft,
+      liked,
+      tag,
+      score,
+      img,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{userId},
+      #{title},
+      #{ip},
+      #{click},
+      #{categoryId},
+      #{isPrivate},
+      #{isSupport},
+      #{isUp},
+      #{readPassword},
+      #{commentId},
+      #{summary},
+      #{isDraft},
+      #{liked},
+      #{tag},
+      #{score},
+      #{img},
+      #{createTime},
+      #{updateTime},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      user_id = #{userId},
+      title = #{title},
+      ip = #{ip},
+      click = #{click},
+      category_id = #{categoryId},
+      is_private = #{isPrivate},
+      is_support = #{isSupport},
+      is_up = #{isUp},
+      read_password = #{readPassword},
+      comment_id = #{commentId},
+      summary = #{summary},
+      is_draft = #{isDraft},
+      liked = #{liked},
+      tag = #{tag},
+      score = #{score},
+      img = #{img},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Article" useGeneratedKeys="true">
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="click != null">
+        click,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="isPrivate != null">
+        is_private,
+      </if>
+      <if test="isSupport != null">
+        is_support,
+      </if>
+      <if test="isUp != null">
+        is_up,
+      </if>
+      <if test="readPassword != null">
+        read_password,
+      </if>
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+      <if test="isDraft != null">
+        is_draft,
+      </if>
+      <if test="liked != null">
+        liked,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="userId != null">
+        #{userId},
+      </if>
+      <if test="title != null">
+        #{title},
+      </if>
+      <if test="ip != null">
+        #{ip},
+      </if>
+      <if test="click != null">
+        #{click},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId},
+      </if>
+      <if test="isPrivate != null">
+        #{isPrivate},
+      </if>
+      <if test="isSupport != null">
+        #{isSupport},
+      </if>
+      <if test="isUp != null">
+        #{isUp},
+      </if>
+      <if test="readPassword != null">
+        #{readPassword},
+      </if>
+      <if test="commentId != null">
+        #{commentId},
+      </if>
+      <if test="summary != null">
+        #{summary},
+      </if>
+      <if test="isDraft != null">
+        #{isDraft},
+      </if>
+      <if test="liked != null">
+        #{liked},
+      </if>
+      <if test="tag != null">
+        #{tag},
+      </if>
+      <if test="score != null">
+        #{score},
+      </if>
+      <if test="img != null">
+        #{img},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId},
+      </if>
+      <if test="title != null">
+        title = #{title},
+      </if>
+      <if test="ip != null">
+        ip = #{ip},
+      </if>
+      <if test="click != null">
+        click = #{click},
+      </if>
+      <if test="categoryId != null">
+        category_id = #{categoryId},
+      </if>
+      <if test="isPrivate != null">
+        is_private = #{isPrivate},
+      </if>
+      <if test="isSupport != null">
+        is_support = #{isSupport},
+      </if>
+      <if test="isUp != null">
+        is_up = #{isUp},
+      </if>
+      <if test="readPassword != null">
+        read_password = #{readPassword},
+      </if>
+      <if test="commentId != null">
+        comment_id = #{commentId},
+      </if>
+      <if test="summary != null">
+        summary = #{summary},
+      </if>
+      <if test="isDraft != null">
+        is_draft = #{isDraft},
+      </if>
+      <if test="liked != null">
+        liked = #{liked},
+      </if>
+      <if test="tag != null">
+        tag = #{tag},
+      </if>
+      <if test="score != null">
+        score = #{score},
+      </if>
+      <if test="img != null">
+        img = #{img},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+    </trim>
+  </insert>
+</mapper>

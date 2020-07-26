@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mirrorming.blog.mapper.generate.ArticleContentMapper">
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.ArticleContent">
+    <!--@Table article_content-->
+    <id column="id" property="id" />
+    <result column="content" property="content" />
+    <result column="content_html" property="contentHtml" />
+    <result column="article_id" property="articleId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, content, content_html, article_id
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update article_content
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="content = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.content}
+        </foreach>
+      </trim>
+      <trim prefix="content_html = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.contentHtml}
+        </foreach>
+      </trim>
+      <trim prefix="article_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.articleId}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update article_content
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="content = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.content != null">
+            when id = #{item.id} then #{item.content}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="content_html = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.contentHtml != null">
+            when id = #{item.id} then #{item.contentHtml}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="article_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.articleId != null">
+            when id = #{item.id} then #{item.articleId}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into article_content
+    (content, content_html, article_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.content}, #{item.contentHtml}, #{item.articleId})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.ArticleContent" useGeneratedKeys="true">
+    insert into article_content
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      content,
+      content_html,
+      article_id,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{content},
+      #{contentHtml},
+      #{articleId},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      content = #{content},
+      content_html = #{contentHtml},
+      article_id = #{articleId},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.ArticleContent" useGeneratedKeys="true">
+    insert into article_content
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="contentHtml != null">
+        content_html,
+      </if>
+      <if test="articleId != null">
+        article_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="content != null">
+        #{content},
+      </if>
+      <if test="contentHtml != null">
+        #{contentHtml},
+      </if>
+      <if test="articleId != null">
+        #{articleId},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="content != null">
+        content = #{content},
+      </if>
+      <if test="contentHtml != null">
+        content_html = #{contentHtml},
+      </if>
+      <if test="articleId != null">
+        article_id = #{articleId},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.ArticleContent">
+    <!--@Table article_content-->
+    <id column="id" property="id" />
+    <result column="content" property="content" />
+    <result column="content_html" property="contentHtml" />
+    <result column="article_id" property="articleId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, content, content_html, article_id
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update article_content
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="content = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.content}
+        </foreach>
+      </trim>
+      <trim prefix="content_html = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.contentHtml}
+        </foreach>
+      </trim>
+      <trim prefix="article_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.articleId}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update article_content
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="content = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.content != null">
+            when id = #{item.id} then #{item.content}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="content_html = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.contentHtml != null">
+            when id = #{item.id} then #{item.contentHtml}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="article_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.articleId != null">
+            when id = #{item.id} then #{item.articleId}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into article_content
+    (content, content_html, article_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.content}, #{item.contentHtml}, #{item.articleId})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.ArticleContent" useGeneratedKeys="true">
+    insert into article_content
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      content,
+      content_html,
+      article_id,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{content},
+      #{contentHtml},
+      #{articleId},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      content = #{content},
+      content_html = #{contentHtml},
+      article_id = #{articleId},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.ArticleContent" useGeneratedKeys="true">
+    insert into article_content
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="contentHtml != null">
+        content_html,
+      </if>
+      <if test="articleId != null">
+        article_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="content != null">
+        #{content},
+      </if>
+      <if test="contentHtml != null">
+        #{contentHtml},
+      </if>
+      <if test="articleId != null">
+        #{articleId},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="content != null">
+        content = #{content},
+      </if>
+      <if test="contentHtml != null">
+        content_html = #{contentHtml},
+      </if>
+      <if test="articleId != null">
+        article_id = #{articleId},
+      </if>
+    </trim>
+  </insert>
+</mapper>

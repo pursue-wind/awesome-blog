@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mirrorming.blog.mapper.generate.MusicListMapper">
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.MusicList">
+    <!--@Table music_list-->
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="pic" property="pic" />
+    <result column="user_id" property="userId" />
+    <result column="tag" property="tag" />
+    <result column="introduction" property="introduction" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, pic, user_id, tag, introduction, create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update music_list
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.name}
+        </foreach>
+      </trim>
+      <trim prefix="pic = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.pic}
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.userId}
+        </foreach>
+      </trim>
+      <trim prefix="tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.tag}
+        </foreach>
+      </trim>
+      <trim prefix="introduction = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.introduction}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createTime}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.updateTime}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update music_list
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id} then #{item.name}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="pic = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.pic != null">
+            when id = #{item.id} then #{item.pic}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.userId != null">
+            when id = #{item.id} then #{item.userId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.tag != null">
+            when id = #{item.id} then #{item.tag}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="introduction = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.introduction != null">
+            when id = #{item.id} then #{item.introduction}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id} then #{item.createTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id} then #{item.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into music_list
+    (`name`, pic, user_id, tag, introduction, create_time, update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.name}, #{item.pic}, #{item.userId}, #{item.tag}, #{item.introduction}, #{item.createTime}, 
+        #{item.updateTime})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.MusicList" useGeneratedKeys="true">
+    insert into music_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `name`,
+      pic,
+      user_id,
+      tag,
+      introduction,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{name},
+      #{pic},
+      #{userId},
+      #{tag},
+      #{introduction},
+      #{createTime},
+      #{updateTime},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      `name` = #{name},
+      pic = #{pic},
+      user_id = #{userId},
+      tag = #{tag},
+      introduction = #{introduction},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.MusicList" useGeneratedKeys="true">
+    insert into music_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="pic != null">
+        #{pic},
+      </if>
+      <if test="userId != null">
+        #{userId},
+      </if>
+      <if test="tag != null">
+        #{tag},
+      </if>
+      <if test="introduction != null">
+        #{introduction},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="name != null">
+        `name` = #{name},
+      </if>
+      <if test="pic != null">
+        pic = #{pic},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId},
+      </if>
+      <if test="tag != null">
+        tag = #{tag},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.MusicList">
+    <!--@Table music_list-->
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="pic" property="pic" />
+    <result column="user_id" property="userId" />
+    <result column="tag" property="tag" />
+    <result column="introduction" property="introduction" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, pic, user_id, tag, introduction, create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update music_list
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.name}
+        </foreach>
+      </trim>
+      <trim prefix="pic = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.pic}
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.userId}
+        </foreach>
+      </trim>
+      <trim prefix="tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.tag}
+        </foreach>
+      </trim>
+      <trim prefix="introduction = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.introduction}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createTime}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.updateTime}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update music_list
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id} then #{item.name}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="pic = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.pic != null">
+            when id = #{item.id} then #{item.pic}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.userId != null">
+            when id = #{item.id} then #{item.userId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.tag != null">
+            when id = #{item.id} then #{item.tag}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="introduction = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.introduction != null">
+            when id = #{item.id} then #{item.introduction}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id} then #{item.createTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id} then #{item.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into music_list
+    (`name`, pic, user_id, tag, introduction, create_time, update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.name}, #{item.pic}, #{item.userId}, #{item.tag}, #{item.introduction}, #{item.createTime}, 
+        #{item.updateTime})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.MusicList" useGeneratedKeys="true">
+    insert into music_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `name`,
+      pic,
+      user_id,
+      tag,
+      introduction,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{name},
+      #{pic},
+      #{userId},
+      #{tag},
+      #{introduction},
+      #{createTime},
+      #{updateTime},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      `name` = #{name},
+      pic = #{pic},
+      user_id = #{userId},
+      tag = #{tag},
+      introduction = #{introduction},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.MusicList" useGeneratedKeys="true">
+    insert into music_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="pic != null">
+        #{pic},
+      </if>
+      <if test="userId != null">
+        #{userId},
+      </if>
+      <if test="tag != null">
+        #{tag},
+      </if>
+      <if test="introduction != null">
+        #{introduction},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="name != null">
+        `name` = #{name},
+      </if>
+      <if test="pic != null">
+        pic = #{pic},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId},
+      </if>
+      <if test="tag != null">
+        tag = #{tag},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+    </trim>
+  </insert>
+</mapper>

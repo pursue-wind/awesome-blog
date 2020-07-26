@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mirrorming.blog.mapper.generate.PermissionMapper">
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Permission">
+    <!--@Table permission-->
+    <id column="id" property="id" />
+    <result column="pid" property="pid" />
+    <result column="name" property="name" />
+    <result column="value" property="value" />
+    <result column="icon" property="icon" />
+    <result column="type" property="type" />
+    <result column="uri" property="uri" />
+    <result column="status" property="status" />
+    <result column="sort" property="sort" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pid, `name`, `value`, icon, `type`, uri, `status`, sort, create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update permission
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="pid = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.pid}
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.name}
+        </foreach>
+      </trim>
+      <trim prefix="`value` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.value}
+        </foreach>
+      </trim>
+      <trim prefix="icon = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.icon}
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.type}
+        </foreach>
+      </trim>
+      <trim prefix="uri = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.uri}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.status}
+        </foreach>
+      </trim>
+      <trim prefix="sort = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.sort}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createTime}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.updateTime}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update permission
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="pid = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.pid != null">
+            when id = #{item.id} then #{item.pid}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id} then #{item.name}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`value` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.value != null">
+            when id = #{item.id} then #{item.value}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="icon = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.icon != null">
+            when id = #{item.id} then #{item.icon}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.type != null">
+            when id = #{item.id} then #{item.type}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="uri = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.uri != null">
+            when id = #{item.id} then #{item.uri}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when id = #{item.id} then #{item.status}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="sort = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.sort != null">
+            when id = #{item.id} then #{item.sort}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id} then #{item.createTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id} then #{item.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into permission
+    (pid, `name`, `value`, icon, `type`, uri, `status`, sort, create_time, update_time
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.pid}, #{item.name}, #{item.value}, #{item.icon}, #{item.type}, #{item.uri}, 
+        #{item.status}, #{item.sort}, #{item.createTime}, #{item.updateTime})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Permission" useGeneratedKeys="true">
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      pid,
+      `name`,
+      `value`,
+      icon,
+      `type`,
+      uri,
+      `status`,
+      sort,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{pid},
+      #{name},
+      #{value},
+      #{icon},
+      #{type},
+      #{uri},
+      #{status},
+      #{sort},
+      #{createTime},
+      #{updateTime},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      pid = #{pid},
+      `name` = #{name},
+      `value` = #{value},
+      icon = #{icon},
+      `type` = #{type},
+      uri = #{uri},
+      `status` = #{status},
+      sort = #{sort},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Permission" useGeneratedKeys="true">
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="value != null">
+        `value`,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="uri != null">
+        uri,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="pid != null">
+        #{pid},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="value != null">
+        #{value},
+      </if>
+      <if test="icon != null">
+        #{icon},
+      </if>
+      <if test="type != null">
+        #{type},
+      </if>
+      <if test="uri != null">
+        #{uri},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+      <if test="sort != null">
+        #{sort},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="pid != null">
+        pid = #{pid},
+      </if>
+      <if test="name != null">
+        `name` = #{name},
+      </if>
+      <if test="value != null">
+        `value` = #{value},
+      </if>
+      <if test="icon != null">
+        icon = #{icon},
+      </if>
+      <if test="type != null">
+        `type` = #{type},
+      </if>
+      <if test="uri != null">
+        uri = #{uri},
+      </if>
+      <if test="status != null">
+        `status` = #{status},
+      </if>
+      <if test="sort != null">
+        sort = #{sort},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Permission">
+    <!--@Table permission-->
+    <id column="id" property="id" />
+    <result column="pid" property="pid" />
+    <result column="name" property="name" />
+    <result column="value" property="value" />
+    <result column="icon" property="icon" />
+    <result column="type" property="type" />
+    <result column="uri" property="uri" />
+    <result column="status" property="status" />
+    <result column="sort" property="sort" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="module" property="module" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pid, `name`, `value`, icon, `type`, uri, `status`, sort, create_time, update_time, 
+    `module`
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update permission
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="pid = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.pid}
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.name}
+        </foreach>
+      </trim>
+      <trim prefix="`value` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.value}
+        </foreach>
+      </trim>
+      <trim prefix="icon = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.icon}
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.type}
+        </foreach>
+      </trim>
+      <trim prefix="uri = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.uri}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.status}
+        </foreach>
+      </trim>
+      <trim prefix="sort = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.sort}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createTime}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.updateTime}
+        </foreach>
+      </trim>
+      <trim prefix="`module` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.module}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update permission
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="pid = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.pid != null">
+            when id = #{item.id} then #{item.pid}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id} then #{item.name}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`value` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.value != null">
+            when id = #{item.id} then #{item.value}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="icon = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.icon != null">
+            when id = #{item.id} then #{item.icon}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.type != null">
+            when id = #{item.id} then #{item.type}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="uri = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.uri != null">
+            when id = #{item.id} then #{item.uri}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when id = #{item.id} then #{item.status}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="sort = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.sort != null">
+            when id = #{item.id} then #{item.sort}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id} then #{item.createTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id} then #{item.updateTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`module` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.module != null">
+            when id = #{item.id} then #{item.module}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into permission
+    (pid, `name`, `value`, icon, `type`, uri, `status`, sort, create_time, update_time, 
+      `module`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.pid}, #{item.name}, #{item.value}, #{item.icon}, #{item.type}, #{item.uri}, 
+        #{item.status}, #{item.sort}, #{item.createTime}, #{item.updateTime}, #{item.module}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Permission" useGeneratedKeys="true">
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      pid,
+      `name`,
+      `value`,
+      icon,
+      `type`,
+      uri,
+      `status`,
+      sort,
+      create_time,
+      update_time,
+      `module`,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{pid},
+      #{name},
+      #{value},
+      #{icon},
+      #{type},
+      #{uri},
+      #{status},
+      #{sort},
+      #{createTime},
+      #{updateTime},
+      #{module},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      pid = #{pid},
+      `name` = #{name},
+      `value` = #{value},
+      icon = #{icon},
+      `type` = #{type},
+      uri = #{uri},
+      `status` = #{status},
+      sort = #{sort},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+      `module` = #{module},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Permission" useGeneratedKeys="true">
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="value != null">
+        `value`,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="uri != null">
+        uri,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="module != null">
+        `module`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="pid != null">
+        #{pid},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="value != null">
+        #{value},
+      </if>
+      <if test="icon != null">
+        #{icon},
+      </if>
+      <if test="type != null">
+        #{type},
+      </if>
+      <if test="uri != null">
+        #{uri},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+      <if test="sort != null">
+        #{sort},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+      <if test="module != null">
+        #{module},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="pid != null">
+        pid = #{pid},
+      </if>
+      <if test="name != null">
+        `name` = #{name},
+      </if>
+      <if test="value != null">
+        `value` = #{value},
+      </if>
+      <if test="icon != null">
+        icon = #{icon},
+      </if>
+      <if test="type != null">
+        `type` = #{type},
+      </if>
+      <if test="uri != null">
+        uri = #{uri},
+      </if>
+      <if test="status != null">
+        `status` = #{status},
+      </if>
+      <if test="sort != null">
+        sort = #{sort},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+      <if test="module != null">
+        `module` = #{module},
+      </if>
+    </trim>
+  </insert>
+</mapper>

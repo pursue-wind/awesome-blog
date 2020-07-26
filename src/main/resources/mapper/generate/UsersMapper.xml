@@ -1,0 +1,2123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mirrorming.blog.mapper.generate.UsersMapper">
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Users">
+    <!--@Table users-->
+    <id column="id" property="id" />
+    <result column="email" property="email" />
+    <result column="password" property="password" />
+    <result column="name" property="name" />
+    <result column="phone" property="phone" />
+    <result column="sex" property="sex" />
+    <result column="qq" property="qq" />
+    <result column="address" property="address" />
+    <result column="score" property="score" />
+    <result column="birthday" property="birthday" />
+    <result column="description" property="description" />
+    <result column="avatar" property="avatar" />
+    <result column="register_time" property="registerTime" />
+    <result column="last_update_time" property="lastUpdateTime" />
+    <result column="register_ip" property="registerIp" />
+    <result column="weibo" property="weibo" />
+    <result column="is_freeze" property="isFreeze" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, email, `password`, `name`, phone, sex, qq, address, score, birthday, description, 
+    avatar, register_time, last_update_time, register_ip, weibo, is_freeze, create_time, 
+    update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update users
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="email = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.email}
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.password}
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.name}
+        </foreach>
+      </trim>
+      <trim prefix="phone = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.phone}
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.sex}
+        </foreach>
+      </trim>
+      <trim prefix="qq = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.qq}
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.address}
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.score}
+        </foreach>
+      </trim>
+      <trim prefix="birthday = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.birthday}
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.description}
+        </foreach>
+      </trim>
+      <trim prefix="avatar = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.avatar}
+        </foreach>
+      </trim>
+      <trim prefix="register_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.registerTime}
+        </foreach>
+      </trim>
+      <trim prefix="last_update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.lastUpdateTime}
+        </foreach>
+      </trim>
+      <trim prefix="register_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.registerIp}
+        </foreach>
+      </trim>
+      <trim prefix="weibo = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.weibo}
+        </foreach>
+      </trim>
+      <trim prefix="is_freeze = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isFreeze}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createTime}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.updateTime}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update users
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="email = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.email != null">
+            when id = #{item.id} then #{item.email}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.password != null">
+            when id = #{item.id} then #{item.password}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id} then #{item.name}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="phone = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.phone != null">
+            when id = #{item.id} then #{item.phone}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.sex != null">
+            when id = #{item.id} then #{item.sex}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="qq = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.qq != null">
+            when id = #{item.id} then #{item.qq}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.address != null">
+            when id = #{item.id} then #{item.address}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.score != null">
+            when id = #{item.id} then #{item.score}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="birthday = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.birthday != null">
+            when id = #{item.id} then #{item.birthday}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.description != null">
+            when id = #{item.id} then #{item.description}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="avatar = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.avatar != null">
+            when id = #{item.id} then #{item.avatar}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="register_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.registerTime != null">
+            when id = #{item.id} then #{item.registerTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="last_update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.lastUpdateTime != null">
+            when id = #{item.id} then #{item.lastUpdateTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="register_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.registerIp != null">
+            when id = #{item.id} then #{item.registerIp}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="weibo = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.weibo != null">
+            when id = #{item.id} then #{item.weibo}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_freeze = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isFreeze != null">
+            when id = #{item.id} then #{item.isFreeze}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id} then #{item.createTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id} then #{item.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into users
+    (email, `password`, `name`, phone, sex, qq, address, score, birthday, description, 
+      avatar, register_time, last_update_time, register_ip, weibo, is_freeze, create_time, 
+      update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.email}, #{item.password}, #{item.name}, #{item.phone}, #{item.sex}, #{item.qq}, 
+        #{item.address}, #{item.score}, #{item.birthday}, #{item.description}, #{item.avatar}, 
+        #{item.registerTime}, #{item.lastUpdateTime}, #{item.registerIp}, #{item.weibo}, 
+        #{item.isFreeze}, #{item.createTime}, #{item.updateTime})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Users" useGeneratedKeys="true">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      email,
+      `password`,
+      `name`,
+      phone,
+      sex,
+      qq,
+      address,
+      score,
+      birthday,
+      description,
+      avatar,
+      register_time,
+      last_update_time,
+      register_ip,
+      weibo,
+      is_freeze,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{email},
+      #{password},
+      #{name},
+      #{phone},
+      #{sex},
+      #{qq},
+      #{address},
+      #{score},
+      #{birthday},
+      #{description},
+      #{avatar},
+      #{registerTime},
+      #{lastUpdateTime},
+      #{registerIp},
+      #{weibo},
+      #{isFreeze},
+      #{createTime},
+      #{updateTime},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      email = #{email},
+      `password` = #{password},
+      `name` = #{name},
+      phone = #{phone},
+      sex = #{sex},
+      qq = #{qq},
+      address = #{address},
+      score = #{score},
+      birthday = #{birthday},
+      description = #{description},
+      avatar = #{avatar},
+      register_time = #{registerTime},
+      last_update_time = #{lastUpdateTime},
+      register_ip = #{registerIp},
+      weibo = #{weibo},
+      is_freeze = #{isFreeze},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Users" useGeneratedKeys="true">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="registerTime != null">
+        register_time,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="registerIp != null">
+        register_ip,
+      </if>
+      <if test="weibo != null">
+        weibo,
+      </if>
+      <if test="isFreeze != null">
+        is_freeze,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="email != null">
+        #{email},
+      </if>
+      <if test="password != null">
+        #{password},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="phone != null">
+        #{phone},
+      </if>
+      <if test="sex != null">
+        #{sex},
+      </if>
+      <if test="qq != null">
+        #{qq},
+      </if>
+      <if test="address != null">
+        #{address},
+      </if>
+      <if test="score != null">
+        #{score},
+      </if>
+      <if test="birthday != null">
+        #{birthday},
+      </if>
+      <if test="description != null">
+        #{description},
+      </if>
+      <if test="avatar != null">
+        #{avatar},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime},
+      </if>
+      <if test="registerIp != null">
+        #{registerIp},
+      </if>
+      <if test="weibo != null">
+        #{weibo},
+      </if>
+      <if test="isFreeze != null">
+        #{isFreeze},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="email != null">
+        email = #{email},
+      </if>
+      <if test="password != null">
+        `password` = #{password},
+      </if>
+      <if test="name != null">
+        `name` = #{name},
+      </if>
+      <if test="phone != null">
+        phone = #{phone},
+      </if>
+      <if test="sex != null">
+        sex = #{sex},
+      </if>
+      <if test="qq != null">
+        qq = #{qq},
+      </if>
+      <if test="address != null">
+        address = #{address},
+      </if>
+      <if test="score != null">
+        score = #{score},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday},
+      </if>
+      <if test="description != null">
+        description = #{description},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar},
+      </if>
+      <if test="registerTime != null">
+        register_time = #{registerTime},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime},
+      </if>
+      <if test="registerIp != null">
+        register_ip = #{registerIp},
+      </if>
+      <if test="weibo != null">
+        weibo = #{weibo},
+      </if>
+      <if test="isFreeze != null">
+        is_freeze = #{isFreeze},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Users">
+    <!--@Table users-->
+    <id column="id" property="id" />
+    <result column="email" property="email" />
+    <result column="password" property="password" />
+    <result column="name" property="name" />
+    <result column="phone" property="phone" />
+    <result column="sex" property="sex" />
+    <result column="qq" property="qq" />
+    <result column="address" property="address" />
+    <result column="score" property="score" />
+    <result column="birthday" property="birthday" />
+    <result column="description" property="description" />
+    <result column="avatar" property="avatar" />
+    <result column="register_time" property="registerTime" />
+    <result column="last_update_time" property="lastUpdateTime" />
+    <result column="register_ip" property="registerIp" />
+    <result column="weibo" property="weibo" />
+    <result column="is_freeze" property="isFreeze" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, email, `password`, `name`, phone, sex, qq, address, score, birthday, description, 
+    avatar, register_time, last_update_time, register_ip, weibo, is_freeze, create_time, 
+    update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update users
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="email = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.email}
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.password}
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.name}
+        </foreach>
+      </trim>
+      <trim prefix="phone = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.phone}
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.sex}
+        </foreach>
+      </trim>
+      <trim prefix="qq = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.qq}
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.address}
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.score}
+        </foreach>
+      </trim>
+      <trim prefix="birthday = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.birthday}
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.description}
+        </foreach>
+      </trim>
+      <trim prefix="avatar = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.avatar}
+        </foreach>
+      </trim>
+      <trim prefix="register_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.registerTime}
+        </foreach>
+      </trim>
+      <trim prefix="last_update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.lastUpdateTime}
+        </foreach>
+      </trim>
+      <trim prefix="register_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.registerIp}
+        </foreach>
+      </trim>
+      <trim prefix="weibo = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.weibo}
+        </foreach>
+      </trim>
+      <trim prefix="is_freeze = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isFreeze}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createTime}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.updateTime}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update users
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="email = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.email != null">
+            when id = #{item.id} then #{item.email}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.password != null">
+            when id = #{item.id} then #{item.password}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id} then #{item.name}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="phone = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.phone != null">
+            when id = #{item.id} then #{item.phone}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.sex != null">
+            when id = #{item.id} then #{item.sex}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="qq = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.qq != null">
+            when id = #{item.id} then #{item.qq}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.address != null">
+            when id = #{item.id} then #{item.address}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.score != null">
+            when id = #{item.id} then #{item.score}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="birthday = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.birthday != null">
+            when id = #{item.id} then #{item.birthday}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.description != null">
+            when id = #{item.id} then #{item.description}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="avatar = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.avatar != null">
+            when id = #{item.id} then #{item.avatar}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="register_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.registerTime != null">
+            when id = #{item.id} then #{item.registerTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="last_update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.lastUpdateTime != null">
+            when id = #{item.id} then #{item.lastUpdateTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="register_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.registerIp != null">
+            when id = #{item.id} then #{item.registerIp}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="weibo = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.weibo != null">
+            when id = #{item.id} then #{item.weibo}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_freeze = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isFreeze != null">
+            when id = #{item.id} then #{item.isFreeze}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id} then #{item.createTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id} then #{item.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into users
+    (email, `password`, `name`, phone, sex, qq, address, score, birthday, description, 
+      avatar, register_time, last_update_time, register_ip, weibo, is_freeze, create_time, 
+      update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.email}, #{item.password}, #{item.name}, #{item.phone}, #{item.sex}, #{item.qq}, 
+        #{item.address}, #{item.score}, #{item.birthday}, #{item.description}, #{item.avatar}, 
+        #{item.registerTime}, #{item.lastUpdateTime}, #{item.registerIp}, #{item.weibo}, 
+        #{item.isFreeze}, #{item.createTime}, #{item.updateTime})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Users" useGeneratedKeys="true">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      email,
+      `password`,
+      `name`,
+      phone,
+      sex,
+      qq,
+      address,
+      score,
+      birthday,
+      description,
+      avatar,
+      register_time,
+      last_update_time,
+      register_ip,
+      weibo,
+      is_freeze,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{email},
+      #{password},
+      #{name},
+      #{phone},
+      #{sex},
+      #{qq},
+      #{address},
+      #{score},
+      #{birthday},
+      #{description},
+      #{avatar},
+      #{registerTime},
+      #{lastUpdateTime},
+      #{registerIp},
+      #{weibo},
+      #{isFreeze},
+      #{createTime},
+      #{updateTime},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      email = #{email},
+      `password` = #{password},
+      `name` = #{name},
+      phone = #{phone},
+      sex = #{sex},
+      qq = #{qq},
+      address = #{address},
+      score = #{score},
+      birthday = #{birthday},
+      description = #{description},
+      avatar = #{avatar},
+      register_time = #{registerTime},
+      last_update_time = #{lastUpdateTime},
+      register_ip = #{registerIp},
+      weibo = #{weibo},
+      is_freeze = #{isFreeze},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Users" useGeneratedKeys="true">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="registerTime != null">
+        register_time,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="registerIp != null">
+        register_ip,
+      </if>
+      <if test="weibo != null">
+        weibo,
+      </if>
+      <if test="isFreeze != null">
+        is_freeze,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="email != null">
+        #{email},
+      </if>
+      <if test="password != null">
+        #{password},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="phone != null">
+        #{phone},
+      </if>
+      <if test="sex != null">
+        #{sex},
+      </if>
+      <if test="qq != null">
+        #{qq},
+      </if>
+      <if test="address != null">
+        #{address},
+      </if>
+      <if test="score != null">
+        #{score},
+      </if>
+      <if test="birthday != null">
+        #{birthday},
+      </if>
+      <if test="description != null">
+        #{description},
+      </if>
+      <if test="avatar != null">
+        #{avatar},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime},
+      </if>
+      <if test="registerIp != null">
+        #{registerIp},
+      </if>
+      <if test="weibo != null">
+        #{weibo},
+      </if>
+      <if test="isFreeze != null">
+        #{isFreeze},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="email != null">
+        email = #{email},
+      </if>
+      <if test="password != null">
+        `password` = #{password},
+      </if>
+      <if test="name != null">
+        `name` = #{name},
+      </if>
+      <if test="phone != null">
+        phone = #{phone},
+      </if>
+      <if test="sex != null">
+        sex = #{sex},
+      </if>
+      <if test="qq != null">
+        qq = #{qq},
+      </if>
+      <if test="address != null">
+        address = #{address},
+      </if>
+      <if test="score != null">
+        score = #{score},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday},
+      </if>
+      <if test="description != null">
+        description = #{description},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar},
+      </if>
+      <if test="registerTime != null">
+        register_time = #{registerTime},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime},
+      </if>
+      <if test="registerIp != null">
+        register_ip = #{registerIp},
+      </if>
+      <if test="weibo != null">
+        weibo = #{weibo},
+      </if>
+      <if test="isFreeze != null">
+        is_freeze = #{isFreeze},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Users">
+    <!--@Table users-->
+    <id column="id" property="id" />
+    <result column="email" property="email" />
+    <result column="password" property="password" />
+    <result column="name" property="name" />
+    <result column="phone" property="phone" />
+    <result column="sex" property="sex" />
+    <result column="qq" property="qq" />
+    <result column="address" property="address" />
+    <result column="score" property="score" />
+    <result column="birthday" property="birthday" />
+    <result column="description" property="description" />
+    <result column="avatar" property="avatar" />
+    <result column="register_time" property="registerTime" />
+    <result column="last_update_time" property="lastUpdateTime" />
+    <result column="register_ip" property="registerIp" />
+    <result column="weibo" property="weibo" />
+    <result column="is_freeze" property="isFreeze" />
+    <result column="is_admin" property="isAdmin" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, email, `password`, `name`, phone, sex, qq, address, score, birthday, description, 
+    avatar, register_time, last_update_time, register_ip, weibo, is_freeze, is_admin, 
+    create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update users
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="email = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.email}
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.password}
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.name}
+        </foreach>
+      </trim>
+      <trim prefix="phone = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.phone}
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.sex}
+        </foreach>
+      </trim>
+      <trim prefix="qq = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.qq}
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.address}
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.score}
+        </foreach>
+      </trim>
+      <trim prefix="birthday = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.birthday}
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.description}
+        </foreach>
+      </trim>
+      <trim prefix="avatar = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.avatar}
+        </foreach>
+      </trim>
+      <trim prefix="register_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.registerTime}
+        </foreach>
+      </trim>
+      <trim prefix="last_update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.lastUpdateTime}
+        </foreach>
+      </trim>
+      <trim prefix="register_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.registerIp}
+        </foreach>
+      </trim>
+      <trim prefix="weibo = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.weibo}
+        </foreach>
+      </trim>
+      <trim prefix="is_freeze = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isFreeze}
+        </foreach>
+      </trim>
+      <trim prefix="is_admin = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isAdmin}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createTime}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.updateTime}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update users
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="email = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.email != null">
+            when id = #{item.id} then #{item.email}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.password != null">
+            when id = #{item.id} then #{item.password}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id} then #{item.name}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="phone = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.phone != null">
+            when id = #{item.id} then #{item.phone}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.sex != null">
+            when id = #{item.id} then #{item.sex}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="qq = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.qq != null">
+            when id = #{item.id} then #{item.qq}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.address != null">
+            when id = #{item.id} then #{item.address}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.score != null">
+            when id = #{item.id} then #{item.score}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="birthday = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.birthday != null">
+            when id = #{item.id} then #{item.birthday}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.description != null">
+            when id = #{item.id} then #{item.description}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="avatar = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.avatar != null">
+            when id = #{item.id} then #{item.avatar}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="register_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.registerTime != null">
+            when id = #{item.id} then #{item.registerTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="last_update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.lastUpdateTime != null">
+            when id = #{item.id} then #{item.lastUpdateTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="register_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.registerIp != null">
+            when id = #{item.id} then #{item.registerIp}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="weibo = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.weibo != null">
+            when id = #{item.id} then #{item.weibo}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_freeze = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isFreeze != null">
+            when id = #{item.id} then #{item.isFreeze}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_admin = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isAdmin != null">
+            when id = #{item.id} then #{item.isAdmin}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id} then #{item.createTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id} then #{item.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into users
+    (email, `password`, `name`, phone, sex, qq, address, score, birthday, description, 
+      avatar, register_time, last_update_time, register_ip, weibo, is_freeze, is_admin, 
+      create_time, update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.email}, #{item.password}, #{item.name}, #{item.phone}, #{item.sex}, #{item.qq}, 
+        #{item.address}, #{item.score}, #{item.birthday}, #{item.description}, #{item.avatar}, 
+        #{item.registerTime}, #{item.lastUpdateTime}, #{item.registerIp}, #{item.weibo}, 
+        #{item.isFreeze}, #{item.isAdmin}, #{item.createTime}, #{item.updateTime})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Users" useGeneratedKeys="true">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      email,
+      `password`,
+      `name`,
+      phone,
+      sex,
+      qq,
+      address,
+      score,
+      birthday,
+      description,
+      avatar,
+      register_time,
+      last_update_time,
+      register_ip,
+      weibo,
+      is_freeze,
+      is_admin,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{email},
+      #{password},
+      #{name},
+      #{phone},
+      #{sex},
+      #{qq},
+      #{address},
+      #{score},
+      #{birthday},
+      #{description},
+      #{avatar},
+      #{registerTime},
+      #{lastUpdateTime},
+      #{registerIp},
+      #{weibo},
+      #{isFreeze},
+      #{isAdmin},
+      #{createTime},
+      #{updateTime},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      email = #{email},
+      `password` = #{password},
+      `name` = #{name},
+      phone = #{phone},
+      sex = #{sex},
+      qq = #{qq},
+      address = #{address},
+      score = #{score},
+      birthday = #{birthday},
+      description = #{description},
+      avatar = #{avatar},
+      register_time = #{registerTime},
+      last_update_time = #{lastUpdateTime},
+      register_ip = #{registerIp},
+      weibo = #{weibo},
+      is_freeze = #{isFreeze},
+      is_admin = #{isAdmin},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Users" useGeneratedKeys="true">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="registerTime != null">
+        register_time,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="registerIp != null">
+        register_ip,
+      </if>
+      <if test="weibo != null">
+        weibo,
+      </if>
+      <if test="isFreeze != null">
+        is_freeze,
+      </if>
+      <if test="isAdmin != null">
+        is_admin,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="email != null">
+        #{email},
+      </if>
+      <if test="password != null">
+        #{password},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="phone != null">
+        #{phone},
+      </if>
+      <if test="sex != null">
+        #{sex},
+      </if>
+      <if test="qq != null">
+        #{qq},
+      </if>
+      <if test="address != null">
+        #{address},
+      </if>
+      <if test="score != null">
+        #{score},
+      </if>
+      <if test="birthday != null">
+        #{birthday},
+      </if>
+      <if test="description != null">
+        #{description},
+      </if>
+      <if test="avatar != null">
+        #{avatar},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime},
+      </if>
+      <if test="registerIp != null">
+        #{registerIp},
+      </if>
+      <if test="weibo != null">
+        #{weibo},
+      </if>
+      <if test="isFreeze != null">
+        #{isFreeze},
+      </if>
+      <if test="isAdmin != null">
+        #{isAdmin},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="email != null">
+        email = #{email},
+      </if>
+      <if test="password != null">
+        `password` = #{password},
+      </if>
+      <if test="name != null">
+        `name` = #{name},
+      </if>
+      <if test="phone != null">
+        phone = #{phone},
+      </if>
+      <if test="sex != null">
+        sex = #{sex},
+      </if>
+      <if test="qq != null">
+        qq = #{qq},
+      </if>
+      <if test="address != null">
+        address = #{address},
+      </if>
+      <if test="score != null">
+        score = #{score},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday},
+      </if>
+      <if test="description != null">
+        description = #{description},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar},
+      </if>
+      <if test="registerTime != null">
+        register_time = #{registerTime},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime},
+      </if>
+      <if test="registerIp != null">
+        register_ip = #{registerIp},
+      </if>
+      <if test="weibo != null">
+        weibo = #{weibo},
+      </if>
+      <if test="isFreeze != null">
+        is_freeze = #{isFreeze},
+      </if>
+      <if test="isAdmin != null">
+        is_admin = #{isAdmin},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="cn.mirrorming.blog.domain.po.Users">
+    <!--@Table users-->
+    <id column="id" property="id" />
+    <result column="email" property="email" />
+    <result column="password" property="password" />
+    <result column="name" property="name" />
+    <result column="phone" property="phone" />
+    <result column="sex" property="sex" />
+    <result column="qq" property="qq" />
+    <result column="address" property="address" />
+    <result column="score" property="score" />
+    <result column="birthday" property="birthday" />
+    <result column="description" property="description" />
+    <result column="avatar" property="avatar" />
+    <result column="register_time" property="registerTime" />
+    <result column="last_update_time" property="lastUpdateTime" />
+    <result column="register_ip" property="registerIp" />
+    <result column="weibo" property="weibo" />
+    <result column="is_freeze" property="isFreeze" />
+    <result column="is_admin" property="isAdmin" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, email, `password`, `name`, phone, sex, qq, address, score, birthday, description, 
+    avatar, register_time, last_update_time, register_ip, weibo, is_freeze, is_admin
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    update users
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="email = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.email}
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.password}
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.name}
+        </foreach>
+      </trim>
+      <trim prefix="phone = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.phone}
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.sex}
+        </foreach>
+      </trim>
+      <trim prefix="qq = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.qq}
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.address}
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.score}
+        </foreach>
+      </trim>
+      <trim prefix="birthday = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.birthday}
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.description}
+        </foreach>
+      </trim>
+      <trim prefix="avatar = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.avatar}
+        </foreach>
+      </trim>
+      <trim prefix="register_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.registerTime}
+        </foreach>
+      </trim>
+      <trim prefix="last_update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.lastUpdateTime}
+        </foreach>
+      </trim>
+      <trim prefix="register_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.registerIp}
+        </foreach>
+      </trim>
+      <trim prefix="weibo = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.weibo}
+        </foreach>
+      </trim>
+      <trim prefix="is_freeze = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isFreeze}
+        </foreach>
+      </trim>
+      <trim prefix="is_admin = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isAdmin}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    update users
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="email = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.email != null">
+            when id = #{item.id} then #{item.email}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.password != null">
+            when id = #{item.id} then #{item.password}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.name != null">
+            when id = #{item.id} then #{item.name}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="phone = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.phone != null">
+            when id = #{item.id} then #{item.phone}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.sex != null">
+            when id = #{item.id} then #{item.sex}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="qq = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.qq != null">
+            when id = #{item.id} then #{item.qq}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.address != null">
+            when id = #{item.id} then #{item.address}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="score = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.score != null">
+            when id = #{item.id} then #{item.score}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="birthday = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.birthday != null">
+            when id = #{item.id} then #{item.birthday}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.description != null">
+            when id = #{item.id} then #{item.description}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="avatar = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.avatar != null">
+            when id = #{item.id} then #{item.avatar}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="register_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.registerTime != null">
+            when id = #{item.id} then #{item.registerTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="last_update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.lastUpdateTime != null">
+            when id = #{item.id} then #{item.lastUpdateTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="register_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.registerIp != null">
+            when id = #{item.id} then #{item.registerIp}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="weibo = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.weibo != null">
+            when id = #{item.id} then #{item.weibo}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_freeze = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isFreeze != null">
+            when id = #{item.id} then #{item.isFreeze}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_admin = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isAdmin != null">
+            when id = #{item.id} then #{item.isAdmin}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into users
+    (email, `password`, `name`, phone, sex, qq, address, score, birthday, description, 
+      avatar, register_time, last_update_time, register_ip, weibo, is_freeze, is_admin
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.email}, #{item.password}, #{item.name}, #{item.phone}, #{item.sex}, #{item.qq}, 
+        #{item.address}, #{item.score}, #{item.birthday}, #{item.description}, #{item.avatar}, 
+        #{item.registerTime}, #{item.lastUpdateTime}, #{item.registerIp}, #{item.weibo}, 
+        #{item.isFreeze}, #{item.isAdmin})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Users" useGeneratedKeys="true">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      email,
+      `password`,
+      `name`,
+      phone,
+      sex,
+      qq,
+      address,
+      score,
+      birthday,
+      description,
+      avatar,
+      register_time,
+      last_update_time,
+      register_ip,
+      weibo,
+      is_freeze,
+      is_admin,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      #{email},
+      #{password},
+      #{name},
+      #{phone},
+      #{sex},
+      #{qq},
+      #{address},
+      #{score},
+      #{birthday},
+      #{description},
+      #{avatar},
+      #{registerTime},
+      #{lastUpdateTime},
+      #{registerIp},
+      #{weibo},
+      #{isFreeze},
+      #{isAdmin},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      email = #{email},
+      `password` = #{password},
+      `name` = #{name},
+      phone = #{phone},
+      sex = #{sex},
+      qq = #{qq},
+      address = #{address},
+      score = #{score},
+      birthday = #{birthday},
+      description = #{description},
+      avatar = #{avatar},
+      register_time = #{registerTime},
+      last_update_time = #{lastUpdateTime},
+      register_ip = #{registerIp},
+      weibo = #{weibo},
+      is_freeze = #{isFreeze},
+      is_admin = #{isAdmin},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="cn.mirrorming.blog.domain.po.Users" useGeneratedKeys="true">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="registerTime != null">
+        register_time,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="registerIp != null">
+        register_ip,
+      </if>
+      <if test="weibo != null">
+        weibo,
+      </if>
+      <if test="isFreeze != null">
+        is_freeze,
+      </if>
+      <if test="isAdmin != null">
+        is_admin,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="email != null">
+        #{email},
+      </if>
+      <if test="password != null">
+        #{password},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="phone != null">
+        #{phone},
+      </if>
+      <if test="sex != null">
+        #{sex},
+      </if>
+      <if test="qq != null">
+        #{qq},
+      </if>
+      <if test="address != null">
+        #{address},
+      </if>
+      <if test="score != null">
+        #{score},
+      </if>
+      <if test="birthday != null">
+        #{birthday},
+      </if>
+      <if test="description != null">
+        #{description},
+      </if>
+      <if test="avatar != null">
+        #{avatar},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime},
+      </if>
+      <if test="registerIp != null">
+        #{registerIp},
+      </if>
+      <if test="weibo != null">
+        #{weibo},
+      </if>
+      <if test="isFreeze != null">
+        #{isFreeze},
+      </if>
+      <if test="isAdmin != null">
+        #{isAdmin},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="email != null">
+        email = #{email},
+      </if>
+      <if test="password != null">
+        `password` = #{password},
+      </if>
+      <if test="name != null">
+        `name` = #{name},
+      </if>
+      <if test="phone != null">
+        phone = #{phone},
+      </if>
+      <if test="sex != null">
+        sex = #{sex},
+      </if>
+      <if test="qq != null">
+        qq = #{qq},
+      </if>
+      <if test="address != null">
+        address = #{address},
+      </if>
+      <if test="score != null">
+        score = #{score},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday},
+      </if>
+      <if test="description != null">
+        description = #{description},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar},
+      </if>
+      <if test="registerTime != null">
+        register_time = #{registerTime},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime},
+      </if>
+      <if test="registerIp != null">
+        register_ip = #{registerIp},
+      </if>
+      <if test="weibo != null">
+        weibo = #{weibo},
+      </if>
+      <if test="isFreeze != null">
+        is_freeze = #{isFreeze},
+      </if>
+      <if test="isAdmin != null">
+        is_admin = #{isAdmin},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -44,7 +44,7 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping("user")
 public class UserController {
-    @Value("${system.vue.address}")
+    @Value("${config.vue.address}")
     private String vueAddress;
     private final UserService userService;
     private final TokenService tokenService;
