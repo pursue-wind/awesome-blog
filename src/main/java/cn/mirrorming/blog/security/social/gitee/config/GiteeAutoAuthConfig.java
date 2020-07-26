@@ -1,7 +1,7 @@
 package cn.mirrorming.blog.security.social.gitee.config;
 
-import cn.mirrorming.blog.config.properties.GiteeProperties;
-import cn.mirrorming.blog.config.properties.SecurityProperties;
+import cn.mirrorming.blog.domain.properties.GiteeProperties;
+import cn.mirrorming.blog.security.properties.SecurityProperties;
 import cn.mirrorming.blog.security.social.gitee.connect.GiteeConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -15,13 +15,13 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 
 /**
- * @Description gitee 社交登录的自动配置
- * @author Mireal
- * @Version 1.0
+ * gitee 社交登录的自动配置
+ *
+ * @author Mireal Chan
  */
 @Configuration
 @EnableSocial
-@ConditionalOnProperty(prefix = "mireal.security.social.gitee", name = "app-id")
+@ConditionalOnProperty(prefix = "security.social.gitee", name = "app-id")
 public class GiteeAutoAuthConfig extends SocialConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;

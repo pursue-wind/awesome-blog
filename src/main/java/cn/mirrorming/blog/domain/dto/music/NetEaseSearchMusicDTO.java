@@ -3,7 +3,7 @@ package cn.mirrorming.blog.domain.dto.music;
 import lombok.Data;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/11/9 13:08
  */

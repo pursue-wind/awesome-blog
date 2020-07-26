@@ -1,5 +1,6 @@
 package cn.mirrorming.blog.utils;
 
+import cn.mirrorming.blog.exception.AppException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,7 +20,7 @@ import java.util.Map;
  * <p>Title: MapperUtils</p>
  * <p>Description: </p>
  *
- * @author Mireal
+ * @author Mireal Chan
  * @since v1.0.0
  */
 @Slf4j
@@ -38,6 +39,10 @@ public class JacksonUtils {
      * @throws Exception
      */
     public static String obj2json(Object obj) {
+        if (obj == null) {
+            log.error("obj2json错误, obj = null");
+            throw new AppException("解析json错误");
+        }
         try {
             return objectMapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {

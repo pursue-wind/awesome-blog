@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Social包在SpringBoot2.x移除了 所以直接复制代码过来
  *
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/12/1 18:08
  */

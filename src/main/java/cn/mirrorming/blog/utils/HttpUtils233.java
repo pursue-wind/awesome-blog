@@ -1,5 +1,6 @@
 package cn.mirrorming.blog.utils;
 
+import cn.mirrorming.blog.domain.dto.music.MusicDetailDTO;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -21,8 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: mirrorming
- * @create: 2019-04-26 20:11
+ * @author Mireal Chan
  **/
 
 public class HttpUtils233 {
@@ -207,7 +207,11 @@ public class HttpUtils233 {
         //歌词：http://music.163.com/api/song/media?id=536099160
 //        getMusicCommpent();
 
-        String s = get("http://wallpaper.apc.360.cn/index.php?c=WallPaper&a=getAppsByOrder&order=create_time&start=0&count=10&from=360chrome");
+//        String s = get("http://music.163.com/api/song/detail/?id=541687281&ids=%5B541687281%5D");
+        String s = get("http://music.163.com/api/song/detail/?id=541687281&ids=%5B541687281%5D");
+        System.out.println(s);
+        MusicDetailDTO dto = JacksonUtils.json2pojo(s, MusicDetailDTO.class);
+        System.out.println(dto);
         System.out.println(s);
     }
 

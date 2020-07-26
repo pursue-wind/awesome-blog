@@ -1,19 +1,22 @@
 package cn.mirrorming.blog.domain.dto;
 
 import cn.mirrorming.blog.domain.po.Category;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDto {
+public class CategoryDTO {
     /**
      * 文章自增ID
      */
@@ -51,10 +54,10 @@ public class CategoryDto {
     /**
      * 目录对象
      */
-    private List<Category> categories;
+    private List<CategoryDTO> children;
 
 
-    public CategoryDto(Category category, List<Category> categories) {
+    public CategoryDTO(Category category) {
         this.id = category.getId();
         this.parentId = category.getParentId();
         this.userId = category.getUserId();
@@ -62,6 +65,16 @@ public class CategoryDto {
         this.avatar = category.getAvatar();
         this.createTime = category.getCreateTime();
         this.updateTime = category.getUpdateTime();
-        this.categories = categories;
+    }
+
+    public CategoryDTO(Category category, List<CategoryDTO> children) {
+        this.id = category.getId();
+        this.parentId = category.getParentId();
+        this.userId = category.getUserId();
+        this.name = category.getName();
+        this.avatar = category.getAvatar();
+        this.createTime = category.getCreateTime();
+        this.updateTime = category.getUpdateTime();
+        this.children = children;
     }
 }

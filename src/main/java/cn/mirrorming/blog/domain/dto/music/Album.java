@@ -6,10 +6,10 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  */
 @Data
-@JsonIgnoreProperties({"songs", "artists", "artist", "alias", "picId_str", "transName"})
+@JsonIgnoreProperties({"songs", "artists", "artist", "alias", "picId_str", "transName","mark"})
 public class Album {
     private String name;
     private long id;

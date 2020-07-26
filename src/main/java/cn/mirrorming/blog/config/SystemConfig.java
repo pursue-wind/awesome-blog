@@ -12,7 +12,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/12/26 16:11
  */

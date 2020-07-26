@@ -6,8 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @Description Gitee 用户信息
- * @author Mireal
+ * Gitee 用户信息
+ *
+ * @author Mireal Chan
  * @Version 1.0
  */
 @Data

@@ -1,7 +1,7 @@
 package cn.mirrorming.blog.security.social.github.config;
 
-import cn.mirrorming.blog.config.properties.GithubProperties;
-import cn.mirrorming.blog.config.properties.SecurityProperties;
+import cn.mirrorming.blog.domain.properties.GithubProperties;
+import cn.mirrorming.blog.security.properties.SecurityProperties;
 import cn.mirrorming.blog.security.social.github.connect.GitHubConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -15,13 +15,13 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 
 /**
- * @Description github 社交登录的自动配置
- * @author Mireal
- * @Version 1.0
+ * github 社交登录的自动配置
+ *
+ * @author Mireal Chan
  */
 @Configuration
 @EnableSocial
-@ConditionalOnProperty(prefix = "mireal.security.social.github", name = "app-id")
+@ConditionalOnProperty(prefix = "security.social.github", name = "app-id")
 public class GithubAutoAuthConfig extends SocialConfigurerAdapter {
 
     @Autowired

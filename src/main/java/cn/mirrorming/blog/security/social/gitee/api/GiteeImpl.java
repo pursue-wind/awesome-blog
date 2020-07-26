@@ -1,6 +1,8 @@
 package cn.mirrorming.blog.security.social.gitee.api;
 
 
+import cn.mirrorming.blog.utils.HttpUtils233;
+import cn.mirrorming.blog.utils.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.web.client.RestTemplate;
@@ -8,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  */
 @Slf4j
 public class GiteeImpl extends AbstractOAuth2ApiBinding implements Gitee {
@@ -25,8 +27,14 @@ public class GiteeImpl extends AbstractOAuth2ApiBinding implements Gitee {
     public GiteeUserInfo getUserInfo() {
 
         RestTemplate restTemplate = new RestTemplate();
-        Map<String, Object> user = restTemplate.getForObject(String.format(URL_GET_USRE_INFO + "?access_token=%s", accessToken), Map.class);
-//        Map<String, Object> user = JSON.parseObject(HttpUtil.get(String.format(URL_GET_USRE_INFO + "?access_token=%s", accessToken), 5000), Map.class);
+//        Map<String, Object> user = restTemplate.getForObject(String.format(URL_GET_USRE_INFO + "?access_token=%s", accessToken), Map.class);
+        String json = HttpUtils233.get(String.format(URL_GET_USRE_INFO + "?access_token=%s", accessToken));
+        Map<String, Object> user  = null;
+        try {
+            user = JacksonUtils.json2pojo(json, Map.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (null != user) {
             int id = (int) user.get("id");
             String username = String.valueOf(user.get("login"));

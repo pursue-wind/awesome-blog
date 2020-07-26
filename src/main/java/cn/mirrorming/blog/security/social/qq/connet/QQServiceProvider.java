@@ -8,7 +8,7 @@ import cn.mirrorming.blog.security.social.qq.QQImpl;
 import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/12/1 16:50
  *

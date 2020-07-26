@@ -1,7 +1,7 @@
 package cn.mirrorming.blog.security.social.gitee.api;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @Version 1.0
  */
 public interface Gitee {

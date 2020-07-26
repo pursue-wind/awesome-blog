@@ -1,6 +1,6 @@
 package cn.mirrorming.blog.security.social;
 
-import cn.mirrorming.blog.config.properties.SecurityProperties;
+import cn.mirrorming.blog.security.properties.SecurityProperties;
 import cn.mirrorming.blog.security.social.support.MirealSpringSocialConfigurer;
 import cn.mirrorming.blog.security.social.support.SocialAuthenticationFilterPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SpringSocialConfigurer;
 
@@ -21,7 +20,7 @@ import javax.sql.DataSource;
 /**
  * 社交登录配置主类
  *
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/12/1 17:25
  */
@@ -45,7 +44,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
         // 第三个参数是对插入到数据库中的数据做加密，这里没有做任何处理，即noOpText
-        JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
+        MirealJdbcUsersConnectionRepository repository = new MirealJdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
         // 为表名增加前缀
         repository.setTablePrefix("mirrorming_");
 
@@ -65,7 +64,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
         // SocialAuthenticationFilter过滤器默认拦截的请求是/auth开头，这里获取自己配置的处理路径/login
         String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
         MirealSpringSocialConfigurer configurer = new MirealSpringSocialConfigurer(filterProcessesUrl);
-        configurer.signupUrl("/mireal-signUp.html");
+        configurer.signupUrl("/user/social");
         configurer.setSocialAuthenticationFilterPostProcessor(socialAuthenticationFilterPostProcessor);
         return configurer;
     }

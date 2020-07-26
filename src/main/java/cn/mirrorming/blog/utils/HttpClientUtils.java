@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Http client utilities.
  *
- * @author johnniang
+ * @author Mireal Chan
  * @date 3/29/19
  */
 public class HttpClientUtils {

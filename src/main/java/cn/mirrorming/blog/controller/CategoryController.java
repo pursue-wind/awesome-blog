@@ -1,9 +1,11 @@
 package cn.mirrorming.blog.controller;
 
-import cn.mirrorming.blog.domain.dto.base.ResultData;
+import cn.mirrorming.blog.aop.logger.Log;
+import cn.mirrorming.blog.domain.common.R;
 import cn.mirrorming.blog.domain.po.Category;
 import cn.mirrorming.blog.service.CategoryService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @Date 2019/9/6 11:32
  * @since v1.0.0
  */
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Api(tags = "分类")
 @RestController
 @RequestMapping("category")
@@ -22,47 +25,37 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    /**
-     * 所有的分类
-     */
+    @Log(value = "所有的分类")
+    @ApiOperation(value = "所有的分类")
     @GetMapping("all")
-    public ResultData selectAllCategory() {
-        return ResultData.succeed(categoryService.selectAllCategory());
+    public R selectAllCategory() {
+        return R.succeed(categoryService.selectAllCategory());
     }
 
-    /**
-     * 所有父级的分类
-     */
-    @GetMapping("parent-all")
-    public ResultData selectAllFatherCategory() {
-        List<Category> parentCategorys = categoryService.selectAllFatherCategory();
-        return ResultData.succeed(parentCategorys);
+    @Log(value = "获得某个 id 的所有子分类")
+    @ApiOperation(value = "获得某个 id 的所有子分类")
+    @GetMapping("parent-all/{id}")
+    public R selectCategorysByParentId(@PathVariable("id") Integer parentId) {
+        List<Category> parentCategorys = categoryService.selectCategorysByParentId(parentId);
+        return R.succeed(parentCategorys);
     }
 
-    /**
-     * 添加分类
-     */
+    @Log(value = "添加分类")
+    @ApiOperation(value = "添加分类")
     @PostMapping("add")
-    public ResultData addCategory(Category category) {
-        return categoryService.addCategory(category) ?
-                ResultData.succeed() : ResultData.fail("添加失败");
-    }
-
-    /**
-     * 删除分类
-     */
-    @DeleteMapping("delete/{id}")
-    public ResultData deleteCategory(@PathVariable Integer id) {
-        return categoryService.deleteCategory(id) ?
-                ResultData.succeed() : ResultData.fail("删除失败");
+    public R addCategory(Category category) {
+        categoryService.addCategory(category);
+        return R.succeed();
     }
 
     /**
      * 修改分类
      */
+    @ApiOperation(value = "修改分类")
+    @Log(value = "修改分类")
     @PutMapping("update")
-    public ResultData updateCategory(Category category) {
-        return categoryService.updateCategory(category) ?
-                ResultData.succeed() : ResultData.fail("修改失败");
+    public R updateCategory(Category category) {
+        categoryService.updateCategory(category);
+        return R.succeed();
     }
 }

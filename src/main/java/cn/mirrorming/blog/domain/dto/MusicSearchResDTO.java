@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  */
 @Data
 @Builder
@@ -17,40 +17,11 @@ import java.util.List;
 @NoArgsConstructor
 public class MusicSearchResDTO implements Serializable {
 
+    private List<MusicSearchResult> musicSearchResults;
     /**
-     * 网易云音乐id
+     * 搜索结果总数
      */
-    private String musicId;
-
-    /**
-     * 歌曲名称
-     */
-    private String name;
-
-    /**
-     * 歌手名称
-     */
-    private List<String> artists;
-
-    /**
-     * 专辑名称
-     */
-    private String albumName;
-
-    /**
-     * 歌曲图片链接
-     */
-    private String coverUrl;
-
-    /**
-     * 歌曲播放链接
-     */
-    private String url;
-
-    /**
-     * 歌词
-     */
-    private String lrcUrl;
+    private int songCount;
 
     private static final long serialVersionUID = 1L;
 }

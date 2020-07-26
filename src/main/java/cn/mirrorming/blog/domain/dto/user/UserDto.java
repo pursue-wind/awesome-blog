@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/11/17 18:29
  */
@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class UserDTO {
     /**
      * 用户ID
      */
@@ -61,4 +61,9 @@ public class UserDto {
      * 用户微博
      */
     private String weibo;
+
+    /**
+     * token
+     */
+    private String token;
 }

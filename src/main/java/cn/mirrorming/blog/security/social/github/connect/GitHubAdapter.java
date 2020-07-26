@@ -7,7 +7,7 @@ import org.springframework.social.connect.ConnectionValues;
 import org.springframework.social.connect.UserProfile;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  */
 public class GitHubAdapter implements ApiAdapter<GitHub> {
 

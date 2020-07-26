@@ -1,33 +1,35 @@
 package cn.mirrorming.blog.exception;
 
-import cn.mirrorming.blog.domain.dto.base.ResultData;
-import com.nimbusds.oauth2.sdk.util.StringUtils;
+
+import cn.mirrorming.blog.domain.common.R;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  * @date 2018/5/11 上午11:56
  */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(BindException.class)
-    public ResultData bindExceptionHandler(BindException bindException) {
-        ResultData res = new ResultData();
+    public R bindExceptionHandler(BindException bindException) {
+        R res = new R();
         StringBuffer sb = new StringBuffer();
         List<FieldError> errors = bindException.getFieldErrors();
         doAppend(res, sb, errors);
         return res;
     }
 
-    private void doAppend(ResultData res, StringBuffer sb, List<FieldError> errors) {
+    private void doAppend(R res, StringBuffer sb, List<FieldError> errors) {
         for (FieldError error : errors) {
             sb.append(error.getField());
             sb.append("字段");
@@ -39,8 +41,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResultData MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
-        ResultData res = new ResultData();
+    public R MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        R res = new R();
         StringBuffer sb = new StringBuffer();
         List<FieldError> errors = e.getBindingResult().getFieldErrors();
         doAppend(res, sb, errors);
@@ -48,17 +50,32 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BusinessException.class)
-    public ResultData businessExceptionHandler(BusinessException e) {
-        return ResultData.fail(e.getMessage());
+    public R businessExceptionHandler(BusinessException e) {
+        return R.fail(e.getMessage());
     }
 
     @ExceptionHandler(UserException.class)
-    public ResultData userExceptionHandler(UserException e) {
-        return ResultData.fail(e.getMessage());
+    public R userExceptionHandler(UserException e) {
+        return R.fail(e.getMessage());
     }
 
     @ExceptionHandler(ArticleException.class)
-    public ResultData articleExceptionHandler(ArticleException e) {
-        return ResultData.fail(e.getMessage());
+    public R articleExceptionHandler(ArticleException e) {
+        return R.fail(e.getMessage());
+    }
+
+    @ExceptionHandler(AppException.class)
+    public R appExceptionHandler(AppException e) {
+        return R.build(e.getMessage(), e.getStatusCode());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public R ExceptionHandler(AppException e) {
+        return R.fail(e.getMessage());
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public R ExceptionHandler(SQLIntegrityConstraintViolationException e) {
+        return R.fail(e.getMessage());
     }
 }

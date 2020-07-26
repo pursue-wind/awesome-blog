@@ -1,7 +1,7 @@
 package cn.mirrorming.blog.exception;
 
 /**
- * @author mirror
+ * @author Mireal Chan
  */
 public class BusinessException extends RuntimeException {
     /**

@@ -3,7 +3,7 @@ package cn.mirrorming.blog.utils;
 import cn.mirrorming.blog.exception.CheckException;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/12/25 19:28
  */
@@ -15,5 +15,7 @@ public class CheckUtil {
             }
         }
     }
+
+
 
 }

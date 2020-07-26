@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  */
 @Data
 @JsonIgnoreProperties({"vipRights", "authStatus", "liveInfo"})

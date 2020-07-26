@@ -1,15 +1,15 @@
 package cn.mirrorming.blog.exception;
 
-import lombok.AllArgsConstructor;
+import cn.mirrorming.blog.domain.enums.RespEnum;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+
 
 /**
- * @author mirror
+ * @author Mireal Chan
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class AppException extends RuntimeException {
     /**
      * 错误码
@@ -25,8 +25,14 @@ public class AppException extends RuntimeException {
         super(message);
     }
 
+    public AppException(RespEnum respEnum) {
+        super(respEnum.getMsg());
+        this.statusCode = respEnum.getCode();
+    }
+
     @Override
     public String getMessage() {
         return super.getMessage();
     }
 }
+

@@ -26,7 +26,10 @@ import org.springframework.util.CollectionUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HttpUtils {
     private static PoolingHttpClientConnectionManager cm;

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  */
 @Data
 public class HotComments {

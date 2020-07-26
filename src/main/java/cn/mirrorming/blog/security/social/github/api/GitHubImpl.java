@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * github api
  *
- * @author Mireal
+ * @author Mireal Chan
  */
 @Slf4j
 public class GitHubImpl extends AbstractOAuth2ApiBinding implements GitHub {

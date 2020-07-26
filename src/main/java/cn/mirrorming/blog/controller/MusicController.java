@@ -1,8 +1,9 @@
 package cn.mirrorming.blog.controller;
 
-import cn.mirrorming.blog.domain.dto.MusicSearchDto;
+import cn.mirrorming.blog.aop.logger.Log;
+import cn.mirrorming.blog.domain.dto.MusicSearchParam;
 import cn.mirrorming.blog.domain.dto.MusicSearchResDTO;
-import cn.mirrorming.blog.domain.dto.base.ResultData;
+import cn.mirrorming.blog.domain.common.R;
 import cn.mirrorming.blog.domain.dto.music.NetEaseCommentDTO;
 import cn.mirrorming.blog.domain.po.Music;
 import cn.mirrorming.blog.domain.po.MusicList;
@@ -15,13 +16,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/11/9 13:46
  */
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Api(tags = "音乐")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
@@ -33,20 +36,21 @@ public class MusicController {
     /**
      * 网易云音乐搜索
      *
-     * @param musicSearchDto {@link MusicSearchDto}
+     * @param musicSearchParam {@link MusicSearchParam}
      * @return ResultData {@link MusicSearchResDTO}
      */
+    @Log(value = "网易云音乐搜索")
     @ApiOperation(value = "网易云音乐搜索")
     @PostMapping("search")
-    public ResultData musicSearch(@RequestBody MusicSearchDto musicSearchDto) throws Exception {
+    public R musicSearch(@Valid @RequestBody MusicSearchParam musicSearchParam) throws Exception {
         ImmutableMap<String, String> params = ImmutableMap.<String, String>builder()
-                .put("s", musicSearchDto.getS())
-                .put("offset", musicSearchDto.getOffset())
-                .put("limit", musicSearchDto.getLimit())
-                .put("type", musicSearchDto.getType())
+                .put("s", musicSearchParam.getS())
+                .put("offset", musicSearchParam.getOffset())
+                .put("limit", musicSearchParam.getLimit())
+                .put("type", musicSearchParam.getType())
                 .build();
-        List<MusicSearchResDTO> resDTOList = musicService.netEaseMusicSearch(params);
-        return ResultData.succeed(resDTOList);
+        MusicSearchResDTO musicSearchResDTO = musicService.netEaseMusicSearch(params);
+        return R.succeed(musicSearchResDTO);
     }
 
     /**
@@ -56,55 +60,79 @@ public class MusicController {
      * @param pageSize 每页数量
      * @param pageNum  当前页
      */
+    @Log(value = "获得网易云评论")
     @ApiOperation(value = "获得网易云评论")
     @GetMapping("/comment")
-    public ResultData getMusicCommentById(String id, String pageSize, String pageNum) throws Exception {
+    public R getMusicCommentById(String id, String pageSize, String pageNum) throws Exception {
         NetEaseCommentDTO commentDTO = musicService.getNetEaseMusicComment(id, pageSize, pageNum);
-        return ResultData.succeed(commentDTO);
+        return R.succeed(commentDTO);
     }
 
-    /**
-     * 查找当前用户所有歌单
-     */
+    @Log(value = "查找当前用户所有歌单", logOperation = Log.LogOperation.IN)
     @ApiOperation(value = "查找当前用户所有歌单")
     @GetMapping("/list")
-    public ResultData<List<MusicList>> selectMusicListByUser(Integer userId) {
-        return ResultData.succeed(musicService.addMusicListByUser(userId));
+    public R<List<MusicList>> selectMusicListByUser(Integer userId) {
+        return R.succeed(musicService.addMusicListByUser(userId));
     }
 
     /**
      * 查找当前用户选择歌单的所有音乐
      */
+    @Log(value = "查找当前用户选择歌单的所有音乐", logOperation = Log.LogOperation.IN)
     @ApiOperation(value = "查找当前用户选择歌单的所有音乐", notes = "前端播放器使用")
     @GetMapping("/list/music")
-    public ResultData<List<Music>> selectMusicByUserAndMusicList(Integer userId, Integer musicListId) {
-        return ResultData.succeed(musicService.selectMusicByUserAndMusicList(userId, musicListId));
+    public R<List<Music>> selectMusicByUserAndMusicList(Integer userId, Integer musicListId) {
+        return R.succeed(musicService.selectMusicByUserAndMusicList(userId, musicListId));
     }
 
     /**
      * 添加歌单
      */
+    @Log(value = "添加歌单", logOperation = Log.LogOperation.IN)
     @ApiOperation(value = "添加歌单")
     @PostMapping("/list/add")
-    public ResultData addMusicList(MusicList musicList) {
-        return ResultData.succeed(musicService.addMusicList(musicList));
+    public R addMusicList(MusicList musicList) {
+        musicService.addMusicList(musicList);
+        return R.succeed();
     }
 
     /**
      * 更新歌单
      */
+    @Log(value = "更新歌单")
     @ApiOperation(value = "更新歌单")
     @PutMapping("/list/update")
-    public ResultData updateMusicList(MusicList musicList) {
-        return ResultData.succeed(musicService.updateMusicList(musicList));
+    public R updateMusicList(MusicList musicList) {
+        musicService.updateMusicList(musicList);
+        return R.succeed();
     }
 
     /**
-     * 歌单添加音乐
+     * 获得歌曲信息,歌单添加音乐
+     *
+     * @param id 网易云歌曲id 516997458
      */
-    @ApiOperation(value = "歌单添加音乐")
-    @PostMapping("/list/addMusic")
-    public ResultData addMusicListByUser(Music music) {
-        return ResultData.succeed(musicService.addMusicListByUser(music));
+    @Log(value = "网易云歌曲id获得歌曲信息,歌单添加音乐")
+    @ApiOperation(value = "网易云歌曲id获得歌曲信息,歌单添加音乐")
+    @PostMapping("/list/addMusic/{id}")
+    public R addMusicListByUser(@PathVariable String id) {
+        Music content = musicService.buildUpMusicById(id);
+        content.setUserId(1);
+        content.setMusicListId(1);
+        musicService.addMusicListByUser(content);
+        return R.succeed(content);
+    }
+
+    /**
+     * 通过id获得音乐的歌词
+     *
+     * @param id 网易云歌曲id 516997458
+     */
+    @Log(value = "通过id获得音乐的歌词", logOperation = Log.LogOperation.IN)
+    @ApiOperation(value = "通过id获得音乐的歌词")
+    @GetMapping("/lyric/{id}")
+    public R getLyricById(@PathVariable String id) {
+        String lyricById = musicService.getLyricById(id);
+        return R.succeed(lyricById);
     }
 }

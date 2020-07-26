@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  *
  */
 @Data

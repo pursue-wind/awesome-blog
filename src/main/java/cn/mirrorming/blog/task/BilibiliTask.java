@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/12/27 12:20
  */
@@ -23,6 +23,6 @@ public class BilibiliTask {
      */
     @Scheduled(cron = "0 0 0 * * ? ")
     public void updateFansGrowNumber() {
-
+//todo 查看每天的粉丝增长数
     }
 }

@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.List;
+
 /**
- * @author mireal
+ * @author Mireal Chan
  */
 @Data
 @JsonIgnoreProperties({"id", "picId", "img1v1Id", "briefDesc", "picUrl", "img1v1Url", "albumSize", "alias", "trans", "musicSize", "topicPerson"})

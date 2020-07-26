@@ -3,7 +3,7 @@ package cn.mirrorming.blog.domain.dto.music;
 import lombok.Data;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  */
 @Data
 public class Associator {

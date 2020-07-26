@@ -1,22 +1,23 @@
 package cn.mirrorming.blog.controller;
 
-import cn.mirrorming.blog.domain.dto.base.ResultData;
+import cn.mirrorming.blog.aop.logger.Log;
+import cn.mirrorming.blog.domain.common.R;
 import cn.mirrorming.blog.domain.dto.bilibili.BilibiliFans;
 import cn.mirrorming.blog.domain.dto.bilibili.BilibiliVideo;
 import cn.mirrorming.blog.service.BilibiliService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/12/27 12:08
  */
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Api(tags = "bilibili")
 @RestController
 @RequestMapping("bilibili")
@@ -24,28 +25,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class BilibiliController {
     private final BilibiliService bilibiliService;
 
-    /**
-     * 通过b站的用户 id 获得该用户的粉丝数
-     */
+    @Log("通过b站的用户 id 获得该用户的粉丝数")
+    @ApiOperation(value = "通过b站的用户 id 获得该用户的粉丝数")
     @GetMapping("fans/{id}")
-    public ResultData archives(@PathVariable("id") String id) throws Exception {
+    public R archives(@PathVariable("id") String id) throws Exception {
         BilibiliFans bilibiliFans = bilibiliService.getGetFansNumberByBiliUserId(id);
-        return ResultData.succeed(bilibiliFans);
+        return R.succeed(bilibiliFans);
     }
 
-    /**
-     * 通过b站的用户 id 获得该用户的投稿视频
-     *
-     * @param biliUserId b站用户id
-     * @param pageNum    第几页
-     * @param pageSize   每页大小
-     * @param keyword    按照关键字过滤
-     * @param order      排序规则
-     * @return
-     */
+    @Log("通过b站的用户 id 获得该用户的投稿视频")
+    @ApiOperation(value = "通过b站的用户 id 获得该用户的投稿视频")
     @GetMapping("video")
-    public ResultData getGetHistoryVideoByBiliUserId(int biliUserId, int pageNum, int pageSize, String keyword, String order) throws Exception {
+    public R getGetHistoryVideoByBiliUserId(
+            @ApiParam(value = "b站用户id") @RequestParam(value = "biliUserId") int biliUserId,
+            @ApiParam(value = "第几页") @RequestParam(value = "pageNum") int pageNum,
+            @ApiParam(value = "每页大小") @RequestParam(value = "pageSize") int pageSize,
+            @ApiParam(value = "按照关键字过滤") @RequestParam(value = "keyword") String keyword,
+            @ApiParam(value = "排序规则") @RequestParam(value = "order") String order) throws Exception {
         BilibiliVideo bilibiliVideo = bilibiliService.getGetHistoryVideoByBiliUserId(biliUserId, pageNum, pageSize, keyword, order);
-        return ResultData.succeed(bilibiliVideo);
+        return R.succeed(bilibiliVideo);
     }
 }

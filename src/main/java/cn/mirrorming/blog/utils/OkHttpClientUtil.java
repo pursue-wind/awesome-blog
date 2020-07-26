@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * OKHttp3
  *
- * @author Mireal
+ * @author Mireal Chan
  * @since v1.0.0
  */
 public class OkHttpClientUtil {
@@ -44,7 +44,6 @@ public class OkHttpClientUtil {
     public static final OkHttpClientUtil getInstance() {
         return SingletonHolder.INSTANCE;
     }
-
 
     /**
      * GET，同步方式，获取网络数据

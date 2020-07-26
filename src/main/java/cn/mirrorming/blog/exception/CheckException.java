@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author mirror
+ * @author Mireal Chan
  */
 @Data
 @NoArgsConstructor

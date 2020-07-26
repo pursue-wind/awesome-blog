@@ -7,7 +7,7 @@ import cn.mirrorming.blog.security.social.qq.QQ;
 import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/12/1 16:49
  * 泛型是API的类型

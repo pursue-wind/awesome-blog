@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  */
 @Data
 @JsonIgnoreProperties({"decoration", "isRemoveHotComment", "beReplied", "pendantData", "showFloorComment", "commentLocationType", "decoration", "repliedMark", "expressionUrl"})

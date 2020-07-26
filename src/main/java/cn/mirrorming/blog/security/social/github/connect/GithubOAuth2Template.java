@@ -13,7 +13,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @Date 2019-11-13 21:49
  * @Version 1.0
  */

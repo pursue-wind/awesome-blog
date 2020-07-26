@@ -6,10 +6,10 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  */
 @Data
-@JsonIgnoreProperties({"alias", "hMusic", "mMusic", "lMusic", "bMusic", "disc", "hearTime", "ringtone", "transName", "transNames", "sign"})
+@JsonIgnoreProperties({"alias", "hMusic", "mMusic", "lMusic", "bMusic", "disc", "hearTime", "ringtone", "transName", "transNames", "sign", "mark"})
 public class Songs {
     private String name;
     private long id;

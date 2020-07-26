@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @Version 1.0
  */
 @Slf4j

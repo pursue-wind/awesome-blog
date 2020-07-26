@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * @Description github 用户信息
- * @author Mireal
+ * github 用户信息
+ * @author Mireal Chan
  * @Version 1.0
  */
 @Data

@@ -2,26 +2,24 @@ package cn.mirrorming.blog.service;
 
 import cn.mirrorming.blog.domain.dto.bilibili.BilibiliFans;
 import cn.mirrorming.blog.domain.dto.bilibili.BilibiliVideo;
+import cn.mirrorming.blog.service.base.AbstractBaseService;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
- * @author Mireal
+ * @author Mireal Chan
  * @version V1.0
  * @date 2019/12/26 14:15
  */
 
 @Slf4j
 @Service
-public class BilibiliService {
+public class BilibiliService
+        extends AbstractBaseService {
 
     private static final String BASE_GET_FANS_NUMBER = "https://api.bilibili.com/";
     private static final String BASE_GET_HISTORY_VIDEO = "http://space.bilibili.com/";
@@ -39,30 +37,6 @@ public class BilibiliService {
                                                            @Query("pageSize") int pageSize,
                                                            @Query("keyword") String keyword,
                                                            @Query("order") String order);
-    }
-
-    /**
-     * 构建 Retrofit
-     *
-     * @return
-     */
-    private Retrofit builderRetrofit(String baseUrl) {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.interceptors().add((Interceptor.Chain chain) -> {
-            Request request = chain.request();
-            Request.Builder requestBuilder = request.newBuilder()
-                    .header("Content-type", "application/json; charset=utf-8")
-                    .header("Accept", "application/json");
-            Request build = requestBuilder.build();
-            return chain.proceed(build);
-        });
-        OkHttpClient client = builder.build();
-
-        return new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
     }
 
     /**

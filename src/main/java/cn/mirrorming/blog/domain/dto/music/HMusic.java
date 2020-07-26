@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
- * @author mireal
+ * @author Mireal Chan
  */
 @Data
 public class HMusic {
