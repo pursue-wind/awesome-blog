@@ -1,5 +1,6 @@
 package cn.mirrorming.blog.service.admin;
 
+import cn.mirrorming.blog.aop.cache.Cache;
 import cn.mirrorming.blog.domain.dto.article.AddArticleDTO;
 import cn.mirrorming.blog.domain.po.Article;
 import cn.mirrorming.blog.domain.po.ArticleContent;
@@ -134,6 +135,7 @@ public class AdminArticleService {
      *
      * @param data
      */
+    @Cache("delete_by_prefix => 'article::ArticleList:*'")
     public void newArticle(AddArticleDTO data) {
         Article article = new Article();
         BeanUtils.copyProperties(data, article);
@@ -156,6 +158,7 @@ public class AdminArticleService {
      * @param articleId
      * @param userId
      */
+    @Cache("delete_by_prefix => 'article::ArticleList:*','article::ArticleContent:' + data.getId() + \":'")
     public void deleteArticle(Integer articleId, Integer userId) {
         Article article = articleMapper.selectById(articleId);
         Check.ifCorrect(article.getUserId().equals(userId)).orElseThrow(() -> new AppException(ILLEGAL_OPERATION));

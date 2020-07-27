@@ -50,15 +50,13 @@ public class AdminArticleController extends BaseController {
     public R newArticle(@RequestBody AddArticleDTO data) {
         data.setUserId(SecurityUtil.getUserId());
         articleService.newArticle(data);
-        // publish文章列表变动事件
-        publishArticleEditEvent();
         return R.succeed();
     }
 
     @Log("编辑文章")
     @ApiOperation(value = "编辑文章")
     @PostMapping("edit/{id}")
-    @Cache("delete_by_prefix => 'article::ArticleList:' + #id, #param + 'suffix'")
+    @Cache("delete_by_prefix => 'article::ArticleList:','article::ArticleContent:' + #id + ':'")
     public R editArticle(@PathVariable("id") Integer id, @RequestBody AddArticleDTO data) {
         data.setUserId(SecurityUtil.getUserId());
         articleService.editArticle(id, data);

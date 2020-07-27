@@ -61,7 +61,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
      */
     @Bean
     public SpringSocialConfigurer mirealSocialSecurityConfig() {
-        // SocialAuthenticationFilter过滤器默认拦截的请求是/auth开头，这里获取自己配置的处理路径/login
+        // SocialAuthenticationFilter 过滤器默认拦截的请求是/auth开头，这里获取自己配置的处理路径/login
         String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
         MirealSpringSocialConfigurer configurer = new MirealSpringSocialConfigurer(filterProcessesUrl);
         configurer.signupUrl("/user/social");
