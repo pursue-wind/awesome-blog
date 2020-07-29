@@ -69,11 +69,9 @@ public class AdminArticleController extends BaseController {
     @Log("删除文章")
     @ApiOperation(value = "删除文章")
     @DeleteMapping("delete/{id}")
+    @Cache("delete_by_prefix => 'article::ArticleList:','article::ArticleContent:' + #articleId + ':'")
     public R newArticle(@PathVariable("id") Integer articleId) {
         articleService.deleteArticle(articleId, SecurityUtil.getUserId());
-
-        // publish文章列表变动事件
-        publishArticleEditEvent();
         return R.succeed();
     }
 }
