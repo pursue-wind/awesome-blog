@@ -19,6 +19,6 @@ ${AnsiColor.BRIGHT_MAGENTA}
                        \_\/
 
 ${AnsiColor.BRIGHT_YELLOW} Application Version:  (v1.0.0.RELEASE)
-${AnsiColor.BRIGHT_CYAN} Spring Boot Version: ${spring-boot.formatted-version}                                ————————————高山仰止,景行行止.虽不能至,心向往之。
+${AnsiColor.BRIGHT_CYAN} Spring Boot Version: ${spring-boot.formatted-version}                                ——————————— 高山仰止,景行行止.虽不能至,心向往之。
 ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 

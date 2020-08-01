@@ -1,6 +1,6 @@
 package cn.mirrorming.blog.security.social.github.config;
 
-import cn.mirrorming.blog.domain.properties.GithubProperties;
+import cn.mirrorming.blog.security.social.properties.GithubProperties;
 import cn.mirrorming.blog.security.properties.SecurityProperties;
 import cn.mirrorming.blog.security.social.github.connect.GitHubConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

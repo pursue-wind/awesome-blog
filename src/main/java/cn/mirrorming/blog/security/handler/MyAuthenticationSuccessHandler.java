@@ -51,11 +51,14 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
                                         Authentication authentication) throws IOException, ServletException {
         String username = authentication.getName();
         log.info("用户" + username + "登录成功");
-
         OAuth2AccessToken oauth2AccessToken;
         try {
             oauth2AccessToken = generateAccessToken(request, response, authentication);
-            responseExport.success(response, oauth2AccessToken);
+            if (request.getRequestURI().contains("auth/")) {
+                responseExport.successAndRedirect(response, oauth2AccessToken.getValue());
+            } else {
+                responseExport.success(response, oauth2AccessToken);
+            }
         } catch (AuthenticationException e) {
             responseExport.failure(response, HttpStatus.UNAUTHORIZED.value(), StatusConstants.BAD_CREDENTIAL, e.getMessage());
         }

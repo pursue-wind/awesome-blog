@@ -1,6 +1,6 @@
 package cn.mirrorming.blog.security.properties;
 
-import cn.mirrorming.blog.domain.properties.MirealSocialProperties;
+import cn.mirrorming.blog.security.social.properties.MirealSocialProperties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

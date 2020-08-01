@@ -34,8 +34,8 @@ public class CacheAspect {
     private RedisOperator redisOperator;
     private static final String SPLIT_EXPRESS = "=>";
     private static final String SPLITOR = ",";
-    private SpelExpressionParser parse = new SpelExpressionParser();
-    private DefaultParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
+    private static final SpelExpressionParser PARSE = new SpelExpressionParser();
+    private static final DefaultParameterNameDiscoverer NAME_DISCOVERER = new DefaultParameterNameDiscoverer();
     /**
      * 通过前缀的删除
      */
@@ -55,10 +55,8 @@ public class CacheAspect {
         }
     };
     private SecurityExpressionParser mySecurityExpressionParser = (point, value) -> {
-        Assert.isTrue(value.contains(SPLIT_EXPRESS),
-                () -> String.format("表达式语法错误: %s, 例：delete_by_prefix => 'prefix' + #id, #param + 'suffix'", value));
-        Assert.isTrue(value.split(SPLIT_EXPRESS).length == 2,
-                () -> String.format("表达式语法错误: %s, 例：delete => 'prefix' + #id, #param + 'suffix'", value));
+        Assert.isTrue(value.contains(SPLIT_EXPRESS), () -> String.format("表达式语法错误: %s, 例：delete_by_prefix => 'prefix' + #id, #param + 'suffix'", value));
+        Assert.isTrue(value.split(SPLIT_EXPRESS).length == 2, () -> String.format("表达式语法错误: %s, 例：delete => 'prefix' + #id, #param + 'suffix'", value));
         String m = value.split(SPLIT_EXPRESS)[0].trim();
         Assert.isTrue(handlerMap.containsKey(m), () -> String.format("@Cache注解参数错误，处理器未找到: %s, 例：delete => 'prefix' + #id, #param + 'suffix'", value));
         String params = value.split(SPLIT_EXPRESS)[1].trim();
@@ -90,8 +88,8 @@ public class CacheAspect {
     private String parse(String spElString, ProceedingJoinPoint p) {
         MethodSignature methodSignature = (MethodSignature) p.getSignature();
         //获得方法参数名字列表
-        String[] paramNames = nameDiscoverer.getParameterNames(methodSignature.getMethod());
-        Expression expression = parse.parseExpression(spElString);
+        String[] paramNames = NAME_DISCOVERER.getParameterNames(methodSignature.getMethod());
+        Expression expression = PARSE.parseExpression(spElString);
         EvaluationContext context = new StandardEvaluationContext();
         Object[] args = p.getArgs();
         IntStream.range(0, args.length).forEach(i -> {

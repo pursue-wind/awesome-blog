@@ -1,6 +1,6 @@
 package cn.mirrorming.blog.security.social.gitee.config;
 
-import cn.mirrorming.blog.domain.properties.GiteeProperties;
+import cn.mirrorming.blog.security.social.properties.GiteeProperties;
 import cn.mirrorming.blog.security.properties.SecurityProperties;
 import cn.mirrorming.blog.security.social.gitee.connect.GiteeConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

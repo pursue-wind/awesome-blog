@@ -1,6 +1,6 @@
 package cn.mirrorming.blog.security.social.qq.config;
 
-import cn.mirrorming.blog.domain.properties.QQProperties;
+import cn.mirrorming.blog.security.social.properties.QQProperties;
 import cn.mirrorming.blog.security.properties.SecurityProperties;
 import cn.mirrorming.blog.security.social.miss.SocialAutoConfigurerAdapter;
 import cn.mirrorming.blog.security.social.qq.connet.QQConnectionFactory;

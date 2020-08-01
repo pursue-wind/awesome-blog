@@ -1,4 +1,4 @@
-package cn.mirrorming.blog.domain.properties;
+package cn.mirrorming.blog.security.social.properties;
 
 import lombok.Data;
 
