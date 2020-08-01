@@ -3,13 +3,16 @@ package cn.mirrorming.blog.service;
 import cn.mirrorming.blog.domain.dto.article.ArticleDTO;
 import cn.mirrorming.blog.domain.dto.article.ArticleListDTO;
 import cn.mirrorming.blog.domain.dto.base.PageDTO;
+import cn.mirrorming.blog.domain.dto.user.UserDTO;
 import cn.mirrorming.blog.domain.po.Article;
 import cn.mirrorming.blog.domain.po.ArticleContent;
+import cn.mirrorming.blog.domain.po.Category;
 import cn.mirrorming.blog.exception.ArticleException;
 import cn.mirrorming.blog.mapper.generate.ArticleContentMapper;
 import cn.mirrorming.blog.mapper.generate.ArticleMapper;
 import cn.mirrorming.blog.mapper.generate.CategoryMapper;
 import cn.mirrorming.blog.mapper.generate.UsersMapper;
+import cn.mirrorming.blog.utils.Filler;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -55,19 +58,20 @@ public class ArticleService {
                                 .eq(categoryId != 0, Article.COL_CATEGORY_ID, categoryId)));
         List<ArticleListDTO> articleList = articlePage.getRecords()
                 .parallelStream()
-                .map(article -> {
-                    article.setReadPassword(StringUtils.isBlank(article.getReadPassword()) ? "" : "密");
-                    try {
-                        return ArticleListDTO.builder().id(article.getId())
-                                .article(article)
-                                .user(usersMapper.selectUserById(article.getUserId()))
-                                .category(categoryMapper.selectById(article.getCategoryId()))
-                                .build();
-                    } catch (Exception e) {
-                        log.info("标签json转换出错：{}", e.getMessage());
-                        throw new ArticleException("标签json转换出错");
-                    }
-                }).collect(Collectors.toList());
+                .map(article -> ArticleListDTO.builder()
+                        .id(article.getId())
+                        .article(article.setReadPassword(StringUtils.isBlank(article.getReadPassword()) ? "" : "密"))
+                        .build()).collect(Collectors.toList());
+
+        Filler.fill(() -> articleList,
+                data -> data.getArticle().getUserId(),
+                ArticleListDTO::setUser,
+                userIds -> Filler.list2Map(usersMapper.selectUserByIds(userIds), UserDTO::getId));
+        Filler.fill(() -> articleList,
+                data -> data.getArticle().getCategoryId(),
+                ArticleListDTO::setCategory,
+                categoryIds -> Filler.list2Map(categoryMapper.selectBatchIds(categoryIds), Category::getId));
+
         return PageDTO.succeed(articleList, articlePage.getCurrent(), articlePage.getTotal());
     }
 

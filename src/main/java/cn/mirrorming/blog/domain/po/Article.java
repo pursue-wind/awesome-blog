@@ -14,11 +14,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @ApiModel(value = "cn-mirrorming-blog-domain-po-Article")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "article")
