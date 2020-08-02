@@ -15,7 +15,9 @@ import cn.mirrorming.blog.mapper.generate.UsersMapper;
 import cn.mirrorming.blog.utils.Filler;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -46,33 +50,44 @@ public class ArticleService {
     /**
      * 查询文章列表，无内容
      */
-    @Cacheable(key = "'ArticleList:'+#cur+':'+#size")
-    public PageDTO<List<ArticleListDTO>> selectArticlePage(int cur, int size, Integer categoryId) {
+//    @Cacheable(key = "'ArticleList:'+#categoryId+':'+#cur+':'+#size")
+    public PageDTO<List<ArticleListDTO>> selectArticlePage(int cur, int size, Integer categoryId) throws ExecutionException, InterruptedException {
         IPage<Article> articlePage = articleMapper.selectPage(
                 new Page<>(cur, size),
-                new QueryWrapper<Article>()
+                Wrappers.<Article>query()
                         .orderByDesc(Article.COL_CREATE_TIME)
                         //文章不是私有，也不是草稿
                         .and(i -> i.eq(Article.COL_IS_PRIVATE, false)
                                 .eq(Article.COL_IS_DRAFT, false)
                                 .eq(categoryId != 0, Article.COL_CATEGORY_ID, categoryId)));
-        List<ArticleListDTO> articleList = articlePage.getRecords()
+        //查询文章列表
+        CompletableFuture<List<ArticleListDTO>> articleListsFuture = CompletableFuture.supplyAsync(() -> articlePage.getRecords()
                 .parallelStream()
                 .map(article -> ArticleListDTO.builder()
                         .id(article.getId())
                         .article(article.setReadPassword(StringUtils.isBlank(article.getReadPassword()) ? "" : "密"))
-                        .build()).collect(Collectors.toList());
+                        .build())
+                .collect(Collectors.toList()));
+        //填充用户
+        CompletableFuture<Void> fillUser = articleListsFuture.thenCompose(articleLists ->
+                CompletableFuture.runAsync(() -> {
+                    Filler.fill(() -> articleLists,
+                            data -> data.getArticle().getUserId(),
+                            ArticleListDTO::setUser,
+                            userIds -> Filler.list2Map(usersMapper.selectUserByIds(userIds), UserDTO::getId));
+                }));
+        //填充目录
+        CompletableFuture<Void> fillCategory = articleListsFuture.thenCompose(articleLists ->
+                CompletableFuture.runAsync(() -> {
+                    Filler.fill(() -> articleLists,
+                            data -> data.getArticle().getCategoryId(),
+                            ArticleListDTO::setCategory,
+                            categoryIds -> Filler.list2Map(categoryMapper.selectBatchIds(categoryIds), Category::getId));
+                }));
+        //等待所有线程执行完毕
+        CompletableFuture.allOf(articleListsFuture, fillUser, fillCategory).get();
 
-        Filler.fill(() -> articleList,
-                data -> data.getArticle().getUserId(),
-                ArticleListDTO::setUser,
-                userIds -> Filler.list2Map(usersMapper.selectUserByIds(userIds), UserDTO::getId));
-        Filler.fill(() -> articleList,
-                data -> data.getArticle().getCategoryId(),
-                ArticleListDTO::setCategory,
-                categoryIds -> Filler.list2Map(categoryMapper.selectBatchIds(categoryIds), Category::getId));
-
-        return PageDTO.succeed(articleList, articlePage.getCurrent(), articlePage.getTotal());
+        return PageDTO.succeed(articleListsFuture.get(), articlePage.getCurrent(), articlePage.getTotal());
     }
 
 

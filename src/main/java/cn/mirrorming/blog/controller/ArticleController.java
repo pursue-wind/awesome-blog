@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Mireal Chan
@@ -33,7 +34,8 @@ public class ArticleController extends BaseController {
     @Log("文章列表")
     @ApiOperation(value = "文章列表")
     @GetMapping("list/{cur}")
-    public PageDTO<List<ArticleListDTO>> selectAllArticle(@PathVariable Integer cur, @RequestParam(required = false, defaultValue = "0") Integer categoryId) {
+    public PageDTO<List<ArticleListDTO>> selectAllArticle(@PathVariable Integer cur,
+                                                          @RequestParam(required = false, defaultValue = "0") Integer categoryId) throws ExecutionException, InterruptedException {
         return articleService.selectArticlePage(cur, 10, categoryId);
     }
 
