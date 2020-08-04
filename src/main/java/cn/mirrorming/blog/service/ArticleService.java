@@ -12,12 +12,13 @@ import cn.mirrorming.blog.mapper.generate.ArticleContentMapper;
 import cn.mirrorming.blog.mapper.generate.ArticleMapper;
 import cn.mirrorming.blog.mapper.generate.CategoryMapper;
 import cn.mirrorming.blog.mapper.generate.UsersMapper;
+import cn.mirrorming.blog.utils.CheckUtils;
+import cn.mirrorming.blog.utils.ExceptionUtils;
 import cn.mirrorming.blog.utils.Filler;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -50,16 +51,17 @@ public class ArticleService {
     /**
      * 查询文章列表，无内容
      */
-//    @Cacheable(key = "'ArticleList:'+#categoryId+':'+#cur+':'+#size")
+    @Cacheable(key = "'ArticleList:'+#cur+':'+#size+':'+#categoryId")
     public PageDTO<List<ArticleListDTO>> selectArticlePage(int cur, int size, Integer categoryId) throws ExecutionException, InterruptedException {
         IPage<Article> articlePage = articleMapper.selectPage(
                 new Page<>(cur, size),
-                Wrappers.<Article>query()
-                        .orderByDesc(Article.COL_CREATE_TIME)
+                Wrappers.<Article>lambdaQuery()
+                        .orderByDesc(Article::getCreateTime)
                         //文章不是私有，也不是草稿
-                        .and(i -> i.eq(Article.COL_IS_PRIVATE, false)
-                                .eq(Article.COL_IS_DRAFT, false)
-                                .eq(categoryId != 0, Article.COL_CATEGORY_ID, categoryId)));
+                        .and(i -> i.eq(Article::getIsPrivate, false)
+                                .eq(Article::getIsDraft, false)
+                                .eq(categoryId != 0, Article::getCategoryId, categoryId)));
+
         //查询文章列表
         CompletableFuture<List<ArticleListDTO>> articleListsFuture = CompletableFuture.supplyAsync(() -> articlePage.getRecords()
                 .parallelStream()
@@ -68,6 +70,7 @@ public class ArticleService {
                         .article(article.setReadPassword(StringUtils.isBlank(article.getReadPassword()) ? "" : "密"))
                         .build())
                 .collect(Collectors.toList()));
+
         //填充用户
         CompletableFuture<Void> fillUser = articleListsFuture.thenCompose(articleLists ->
                 CompletableFuture.runAsync(() -> {
@@ -76,6 +79,7 @@ public class ArticleService {
                             ArticleListDTO::setUser,
                             userIds -> Filler.list2Map(usersMapper.selectUserByIds(userIds), UserDTO::getId));
                 }));
+
         //填充目录
         CompletableFuture<Void> fillCategory = articleListsFuture.thenCompose(articleLists ->
                 CompletableFuture.runAsync(() -> {
@@ -84,6 +88,7 @@ public class ArticleService {
                             ArticleListDTO::setCategory,
                             categoryIds -> Filler.list2Map(categoryMapper.selectBatchIds(categoryIds), Category::getId));
                 }));
+
         //等待所有线程执行完毕
         CompletableFuture.allOf(articleListsFuture, fillUser, fillCategory).get();
 
@@ -102,35 +107,36 @@ public class ArticleService {
     public Map<String, Map<String, List<Article>>> filedArticle() {
         TreeMap<String, Map<String, List<Article>>> res = new TreeMap<>(
                 (y, x) -> Integer.parseInt(x.substring(0, x.length() - 1)) - Integer.parseInt(y.substring(0, y.length() - 1)));
-        articleMapper.selectList(
-                new QueryWrapper<Article>()
-                        .orderByDesc(Article.COL_CREATE_TIME)
-                        //文章不是私有，也不是草稿
-                        .and(i -> i.eq(Article.COL_IS_PRIVATE, false)
-                                .eq(Article.COL_IS_DRAFT, false)))
-                .stream()
-                .peek(article -> article.setReadPassword(StringUtils.isBlank(article.getReadPassword()) ? "" : "密"))
-                //按年归档
-                .collect(Collectors.groupingBy(article -> {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(article.getCreateTime());
-                    return calendar.get(Calendar.YEAR) + "年";
-                }))
-                .entrySet()
-                .stream()
-                //按月归档
-                .collect(
-                        Collectors.toMap(
-                                Map.Entry::getKey,
-                                val -> val.getValue().stream().collect(Collectors.groupingBy(article -> {
-                                    Calendar calendar = Calendar.getInstance();
-                                    calendar.setTime(article.getCreateTime());
-                                    return calendar.get(Calendar.MONTH) + "月";
-                                }, () -> new TreeMap<>((y, x) ->
-                                        Integer.parseInt(x.substring(0, x.length() - 1)) -
-                                                Integer.parseInt(y.substring(0, y.length() - 1))), Collectors.toList())))
-                )
-                .forEach(res::put);
+        res.putAll(
+                articleMapper.selectList(
+                        new QueryWrapper<Article>()
+                                .orderByDesc(Article.COL_CREATE_TIME)
+                                //文章不是私有，也不是草稿
+                                .and(i -> i.eq(Article.COL_IS_PRIVATE, false)
+                                        .eq(Article.COL_IS_DRAFT, false)))
+                        .stream()
+                        .peek(article -> article.setReadPassword(StringUtils.isBlank(article.getReadPassword()) ? "" : "密"))
+                        //按年归档
+                        .collect(Collectors.groupingBy(article -> {
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(article.getCreateTime());
+                            return calendar.get(Calendar.YEAR) + "年";
+                        }))
+                        .entrySet()
+                        .stream()
+                        //按月归档
+                        .collect(
+                                Collectors.toMap(
+                                        Map.Entry::getKey,
+                                        val -> val.getValue().stream().collect(Collectors.groupingBy(article -> {
+                                            Calendar calendar = Calendar.getInstance();
+                                            calendar.setTime(article.getCreateTime());
+                                            return calendar.get(Calendar.MONTH) + "月";
+                                        }, () -> new TreeMap<>((y, x) ->
+                                                Integer.parseInt(x.substring(0, x.length() - 1)) -
+                                                        Integer.parseInt(y.substring(0, y.length() - 1))), Collectors.toList())))
+                        )
+        );
         return res;
     }
 
@@ -143,16 +149,15 @@ public class ArticleService {
         Article article = articleMapper.selectById(id);
         Optional.ofNullable(article).orElseThrow(() -> new ArticleException("文章不存在"));
 
-        if (StringUtils.isNotBlank(article.getReadPassword()) &&
-                !StringUtils.equals(article.getReadPassword(), readPassword)) {
-            throw new ArticleException("文章阅读密码错误");
-        }
+        CheckUtils.mustTrue(
+                StringUtils.isNotBlank(article.getReadPassword()) && !StringUtils.equals(article.getReadPassword(), readPassword),
+                () -> ExceptionUtils.articleEx("文章阅读密码错误"));
+
         //文章内容
         ArticleContent articleContent = articleContentMapper.selectOne(
-                new QueryWrapper<ArticleContent>().eq(ArticleContent.COL_ARTICLE_ID, article.getId()));
+                Wrappers.<ArticleContent>query().eq(ArticleContent.COL_ARTICLE_ID, article.getId()));
         //文章密码修改再返回
         article.setReadPassword(StringUtils.isBlank(article.getReadPassword()) ? "" : "密");
-
 
         return ArticleDTO.builder()
                 .article(article)
