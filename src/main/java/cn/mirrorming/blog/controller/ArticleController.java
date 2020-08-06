@@ -2,17 +2,16 @@ package cn.mirrorming.blog.controller;
 
 import cn.mirrorming.blog.aop.logger.Log;
 import cn.mirrorming.blog.controller.base.BaseController;
+import cn.mirrorming.blog.domain.common.R;
 import cn.mirrorming.blog.domain.dto.article.ArticleDTO;
 import cn.mirrorming.blog.domain.dto.article.ArticleListDTO;
 import cn.mirrorming.blog.domain.dto.base.PageDTO;
-import cn.mirrorming.blog.domain.common.R;
 import cn.mirrorming.blog.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +28,6 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ArticleController extends BaseController {
     private final ArticleService articleService;
-    private final ApplicationContext applicationContext;
 
     @Log("文章列表")
     @ApiOperation(value = "文章列表")

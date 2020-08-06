@@ -187,4 +187,5 @@ public class ArticleService {
     public String selectWordNumberSum() {
         return articleMapper.selectWordNumberSum();
     }
+
 }
