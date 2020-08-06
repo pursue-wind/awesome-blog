@@ -15,32 +15,118 @@ import java.util.stream.Stream;
  */
 public class Filler {
     static class FillerImpl<IN, R> {
+
+        /**
+         * @param data     源
+         * @param getter   DATA_getter
+         * @param setter   DATA_setter
+         * @param function DATA_provider
+         */
         void fill(Supplier<Collection<IN>> data,
                   Function<IN, Integer> getter,
                   BiConsumer<IN, R> setter,
                   Function<Collection<Integer>, Map<Integer, R>> function) {
             Collection<IN> collection = data.get();
-            Collection<Integer> ids = collection.stream().map(getter).collect(Collectors.toSet());
+            Collection<Integer> ids = collection.stream().map(getter).filter(Objects::nonNull).collect(Collectors.toSet());
             Map<Integer, R> map = function.apply(ids);
-            collection.forEach(in -> setter.accept(in, map.get(getter.apply(in))));
+            collection.forEach(in -> Optional.ofNullable(map.get(getter.apply(in))).ifPresent(r -> setter.accept(in, r)));
         }
 
+        /**
+         * @param data          源
+         * @param propertiesMap DATA_getter:DATA_setter
+         * @param function      DATA_provider
+         */
         void fill(Supplier<Collection<IN>> data,
                   Map<Function<IN, Integer>, BiConsumer<IN, R>> propertiesMap,
                   Function<Collection<Integer>, Map<Integer, R>> function) {
             Collection<IN> collection = data.get();
 
             Collection<Integer> ids = propertiesMap.keySet().stream()
-                    .map(getter -> collection.stream().map(getter))
+                    .map(getter -> collection.stream().map(getter).filter(Objects::nonNull))
+                    .flatMap(Stream::distinct)
+                    .collect(Collectors.toSet());
+            Map<Integer, R> map = function.apply(ids);
+            propertiesMap.forEach((getter, setter) -> collection.forEach(in -> Optional.ofNullable(map.get(getter.apply(in))).ifPresent(r -> setter.accept(in, r))));
+        }
+
+        /**
+         * @param data          源
+         * @param propertiesMap DATA_getter:{R_getter:R_setter}
+         * @param provider      DATA_provider
+         */
+        void fillMultiValue(Supplier<Collection<IN>> data,
+                            Map<Function<IN, Integer>, Map<Function<R, String>, BiConsumer<IN, String>>> propertiesMap,
+                            Function<Collection<Integer>, Map<Integer, R>> provider) {
+            Collection<IN> collection = data.get();
+
+            Collection<Integer> ids = propertiesMap.keySet().stream()
+                    .map(getter -> collection.stream().map(getter).filter(Objects::nonNull))
                     .flatMap(Stream::distinct)
                     .collect(Collectors.toSet());
 
-            Map<Integer, R> map = function.apply(ids);
-
-            propertiesMap.forEach((getter, setter) -> {
-                collection.forEach(in -> setter.accept(in, map.get(getter.apply(in))));
-            });
+            Map<Integer, R> map = provider.apply(ids);
+            propertiesMap.forEach(
+                    (getter, setters) -> collection.forEach(in -> setters.forEach(
+                            (rGetter, rSetter) -> Optional.ofNullable(map.get(getter.apply(in))).ifPresent(r -> rSetter.accept(in, rGetter.apply(r))))));
         }
+
+        /**
+         * @param data        源
+         * @param providerMap DATA_getter:DATA_provider
+         * @param setter      Setter
+         */
+        void fillOne(Supplier<Collection<IN>> data,
+                     BiConsumer<IN, R> setter,
+                     Map<Function<IN, Integer>, Function<Collection<Integer>, Map<Integer, R>>> providerMap) {
+            Collection<IN> collection = data.get();
+            Map<Function<IN, Integer>, Map<Integer, R>> getterMap = providerMap.entrySet().stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey, map -> map.getValue().apply(collection.stream().map(map.getKey()).collect(Collectors.toSet()))));
+            collection.forEach(in -> getterMap.forEach((getter, val) -> Optional.ofNullable(val.get(getter.apply(in))).ifPresent(r -> setter.accept(in, r))));
+//            getterMap.forEach((getter, val) -> collection.forEach(in -> Optional.ofNullable(val.get(getter.apply(in))).ifPresent(r -> setter.accept(in, r))));
+        }
+    }
+
+    /**
+     * @param data        源
+     * @param setter      setter
+     * @param providerMap getter:DATA_provider
+     */
+    public static <IN, R> void fillOne(Supplier<Collection<IN>> data,
+                                       BiConsumer<IN, R> setter,
+                                       Map<Function<IN, Integer>, Function<Collection<Integer>, Map<Integer, R>>> providerMap) {
+        new FillerImpl<IN, R>().fillOne(data, setter, providerMap);
+    }
+
+    /**
+     * 填充多个值
+     *
+     * @param data     源
+     * @param getter   getter
+     * @param valueMap valueMapping
+     * @param provider DATA_provider
+     */
+    public static <IN, R> void fillMultiValue(Supplier<Collection<IN>> data,
+                                              Function<IN, Integer> getter,
+                                              Map<Function<R, String>, BiConsumer<IN, String>> valueMap,
+                                              Function<Collection<Integer>, Map<Integer, R>> provider) {
+        new FillerImpl<IN, R>().fillMultiValue(data, ImmutableMap.of(getter, valueMap), provider);
+    }
+
+
+    /**
+     * 填充多个值
+     *
+     * @param data
+     * @param propertiesMap 属性映射map
+     * @param function      数据源
+     * @param <IN>          输入
+     * @param <R>           设置值的类型
+     */
+    public static <IN, R> void fillMultiValue(Supplier<Collection<IN>> data,
+                                              Map<Function<IN, Integer>, Map<Function<R, String>, BiConsumer<IN, String>>> propertiesMap,
+                                              Function<Collection<Integer>, Map<Integer, R>> function) {
+        new FillerImpl<IN, R>().fillMultiValue(data, propertiesMap, function);
     }
 
     /**
@@ -58,6 +144,21 @@ public class Filler {
                                     BiConsumer<IN, R> setter,
                                     Function<Collection<Integer>, Map<Integer, R>> queryData) {
         new FillerImpl<IN, R>().fill(data, getter, setter, queryData);
+    }
+
+    /**
+     * 对象属性填充 IN { id, R(null) }   ->   IN { id, R(value) }
+     *
+     * @param data
+     * @param queryData     根据数据来源 转换值 id -> DB -> R
+     * @param propertiesMap 字段映射（getter -> 值来源，setter -> 对象设值字段）
+     * @param <IN>          输入
+     * @param <R>           设置值的类型
+     */
+    public static <IN, R> void fill(IN data,
+                                    Function<Collection<Integer>, Map<Integer, R>> queryData,
+                                    Map<Function<IN, Integer>, BiConsumer<IN, R>> propertiesMap) {
+        new FillerImpl<IN, R>().fill(() -> Collections.<IN>singleton(data), propertiesMap, queryData);
     }
 
     /**
