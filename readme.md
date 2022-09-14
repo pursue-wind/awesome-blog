@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/Redis-v6.0-blue.svg)](https://github.com/pursue-wind/awesome-blog)
 [![License](https://img.shields.io/badge/ElasticSearch-v7.0-blue.svg)](https://github.com/pursue-wind/awesome-blog)
 
-## **awesome-blog** 使用Kotlin、SpringBoot、Vue开发的前后端分离的博客项目。 
+使用Kotlin、SpringBoot、Vue开发的前后端分离的博客项目。 
 > 基于 https://github.com/X1192176811/blog 项目修改，后端改为 kotlin + gradle，多级分类等
 
 在线演示：http://pursue.pub
