@@ -1,13 +1,17 @@
 # awesome-blog... 
 
-[![License](https://img.shields.io/badge/SpringBoot-v2.2.0.RELEASE-green.svg)](https://github.com/mirrormingzZ/mirror-blog-springboot-vue)
-[![License](https://img.shields.io/badge/Vue.js-v2.x-blue.svg)](https://github.com/mirrormingzZ/mirror-blog-springboot-vue)
-[![License](https://img.shields.io/badge/Mysql-v8.0-blue.svg)](https://github.com/mirrormingzZ/mirror-blog-springboot-vue)
-[![License](https://img.shields.io/badge/Redis-v1.0-blue.svg)](https://github.com/mirrormingzZ/mirror-blog-springboot-vue)
-[![License](https://img.shields.io/badge/ElasticSearch-v1.0-blue.svg)](https://github.com/mirrormingzZ/mirror-blog-springboot-vue)
+[![License](https://img.shields.io/badge/SpringBoot-v2.4.5.RELEASE-green.svg)](https://github.com/pursue-wind/awesome-blog)
+[![License](https://img.shields.io/badge/Vue.js-v2.x-blue.svg)](https://github.com/pursue-wind/awesome-blog)
+[![License](https://img.shields.io/badge/Mysql-v8.0-blue.svg)](https://github.com/pursue-wind/awesome-blog)
+[![License](https://img.shields.io/badge/Redis-v6.0-blue.svg)](https://github.com/pursue-wind/awesome-blog)
+[![License](https://img.shields.io/badge/ElasticSearch-v7.0-blue.svg)](https://github.com/pursue-wind/awesome-blog)
 
-**awesome-blog** 基于SpringBoot、vue开发的前后端分离的博客项目。登录注册，ElasticSearch全文检索，拖拽上传，过渡动画，音乐搜索播放，Markdown编辑器，Gitalk。 
-- 基于 Spring Boot 2.2.0 、Spring Security
+## **awesome-blog** 使用Kotlin、SpringBoot、Vue开发的前后端分离的博客项目。 
+> 基于 https://github.com/X1192176811/blog 项目修改，后端改为 kotlin + gradle，多级分类等
+
+在线演示：http://pursue.pub
+
+- 基于 Kotlin、Spring Boot、Spring Security
 - 基于 Vue Vuetify的实践
 - 作为 Mybatis Plus 的学习与实践
 - 作为 ElasticSearch 的学习与实践
@@ -23,8 +27,6 @@
 - 数据库连接池：Hikari
 - 缓存：Redis
 - 检索引擎：ElasticSearch
-- 文件系统：七牛云
-- 日志：Logback
 
 ## 前端
 
@@ -34,7 +36,6 @@
 - 状态管理：Vuex
 
 ## 持续集成
-
-- 持续集成：Coding + Jenkins
+- 持续集成：阿里云云效
 
 
