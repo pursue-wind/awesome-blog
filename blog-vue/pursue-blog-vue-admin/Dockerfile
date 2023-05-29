@@ -1,4 +1,4 @@
-FROM nginx:stable-alpine as production-stage
+FROM nginx:mainline-alpine as production-stage
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY dist /usr/share/nginx/html
  
